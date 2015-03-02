@@ -10,7 +10,7 @@ It was December 2013, created my own version with most of the algorithm intact.
 Then the integer probability and seed control made easier to handle the beast.
 Found out the other day lost in my HD, optimized a little bit (30%) and here we are.
 
-# TODOs
+# ToDo's
 - Image class without dependencies
 - Optional clean step
 - Support odd proportions
