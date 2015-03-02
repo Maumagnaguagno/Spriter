@@ -1,0 +1,2 @@
+# Spriter
+Sprite generator
