@@ -11,7 +11,25 @@ class Image
   def initialize(width, height)
     @width = width
     @height = height
-    @pixels = '\0' * (width * height << 2)
+    @pixels = "\0" * (width * height << 2)
+  end
+
+  #-----------------------------------------------
+  # Set pixel
+  #-----------------------------------------------
+
+  def set_pixel(x, y, r, g, b, a)
+    @pixels[x + y * width << 2, 4] = [b,g,r,a].pack('C4')
+    self
+  end
+
+  #-----------------------------------------------
+  # Get pixel
+  #-----------------------------------------------
+
+  def get_pixel(x, y)
+    index = x + y * width << 2
+    @pixels[index, 3].reverse.unpack('C3') << @pixels[index + 3].unpack('C')
   end
 
   #-----------------------------------------------
