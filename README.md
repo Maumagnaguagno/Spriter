@@ -42,12 +42,16 @@ img.write(0, 0, data, data.size)
 # Which extension we need? Save them all
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
-img.save_svg('red.svg') # SVGs are vector, eat both at the current level (66.4 KB)
+img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
+img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed, the best (149 bytes)
 ```
 You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the descompression under Ruby 1.8.7. I need more tests to see if this behavior maintains. But BMPs work just fine and can be loaded with ```img = Image.load_bmp2(filename)```, noticed a ```2```? This happens because I have a C version as the default one, some large bitmaps take a long time to load and fill the alpha channel to each pixel, therefore I maintained the old version under a different name. You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement. I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
 If you do not understand at first sight some of my tricks you should read this explanation as a guide to the binary format of BMPs: https://practicingruby.com/articles/binary-file-formats  
 I just optimized further for my specific need/love of BMPs with 24 bits.
+
+SVGs are very recent to me, never explored them earlier. The default method to save SVGs is extremely simple and creates a big file, while the second creates a single rect for the background, removing several pixels from the grid.
+The next step is to cluster the remaining pixels in few rects.
 
 # How Spriter works
 Ok, so now we (You and I!) can play with images. Yeah! But none of us know how to draw, even less without interface. But we are not alone, the computer also does not know. Now the three of us make the non-artist club. We know that sometimes we draw OK, but it is one in ten. The computer can draw much faster those ten... Humm... OK, what if we asked for a lot of images with different random seeds and pixel distribution probabilities. It works! Creativity is just brute-force with insight now! We can look at the images generated and complete the blanks of our computer friend.
