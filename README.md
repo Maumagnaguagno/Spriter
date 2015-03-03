@@ -43,7 +43,7 @@ img.write(0, 0, data, data.size)
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
-img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed, the best (149 bytes)
+img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed (removing background), the best (149 bytes)
 ```
 You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7. I need more tests to see if this behavior maintains. But BMPs work just fine (if encoding is set properly) and can be loaded with ```img = Image.load_bmp2(filename)```, noticed a ```2```? This happens because I have a C version as the default one, some large bitmaps take a long time to load and fill the alpha channel to each pixel, therefore I maintained the old version under a different name. You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement. I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
