@@ -193,8 +193,8 @@ class Spriter
 
   def save(filename, ext = 'bmp', front = [0,255,0,255], back = [0,0,0,255])
     # [R,G,B,A] to BGRA32
-    front = (front[0,3].reverse! << front.last).pack('c4')
-    back = (back[0,3].reverse! << back.last).pack('c4')
+    front = (front[0,3].reverse! << front.last).pack('C4')
+    back = (back[0,3].reverse! << back.last).pack('C4')
     pixels = ''
     @grid.each {|i| pixels << (i.zero? ? back : front)}
     img = Image.new(@width, @height).write(0, 0, pixels, pixels.size)
@@ -203,6 +203,8 @@ class Spriter
       img.save_bmp("#{filename}.bmp")
     when 'png'
       img.save_png("#{filename}.png", Image::RGB)
+    when 'svg'
+      img.save_svg("#{filename}.svg")
     else
       raise "Unknown extension #{ext}"
     end
