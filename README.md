@@ -50,9 +50,9 @@ If you do not understand at first sight some of my tricks you should read this e
 I just optimized further for my specific need/love of BMPs with 24 bits.
 
 # How Spriter works
-Ok, so now we (You and I!) can play with images. Yeah! But none of us knows how to draw, even less without interface. But we are not alone, the computer also does not know. Now the three of us make the non-artist club. We know that sometimes we got it, but it is one in ten. The computer can draw much faster those ten... Humm... OK, what if we asked for a lot of images with different random seeds and pixel distribution probabilities. It works, creativity is just brute-force with insight now! We can look at the images generated and complete the blanks of our computer friend.
+Ok, so now we (You and I!) can play with images. Yeah! But none of us know how to draw, even less without interface. But we are not alone, the computer also does not know. Now the three of us make the non-artist club. We know that sometimes we draw OK, but it is one in ten. The computer can draw much faster those ten... Humm... OK, what if we asked for a lot of images with different random seeds and pixel distribution probabilities. It works! Creativity is just brute-force with insight now! We can look at the images generated and complete the blanks of our computer friend.
 
-It is important to note that you can reproduce your results giving the same ~~seed~~inspiration to the computer. If you do not need to save the images to files there is no need to require Image. Spriter is grid based (zeroes and ones)
+It is important to note that you can reproduce your results giving the same ~~seed~~inspiration to the computer. If you do not need to save the images to files there is no need to require the Image class. Spriter is grid-based (zeroes and ones) and can print without problems to the terminal.
 
 ```Ruby
 require './Image'
