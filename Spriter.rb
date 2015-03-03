@@ -205,6 +205,8 @@ class Spriter
       img.save_png("#{filename}.png", Image::RGB)
     when 'svg'
       img.save_svg("#{filename}.svg")
+    when 'svgx'
+      img.save_svg_compressed("#{filename}.svg", back.unpack('C3'))
     else
       raise "Unknown extension #{ext}"
     end
