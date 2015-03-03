@@ -208,15 +208,35 @@ class Image
     data = data.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
-      index = y = 0
-      height.times {
-        x = 0
-        width.times {
-          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index]}, #{data[index+1]}, #{data[index+2]})\" />\n"
+      index = 0
+      height.times {|y|
+        width.times {|x|
+          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index+2]},#{data[index+1]},#{data[index]})\"/>\n"
           index += 4
-          x += 1
         }
-        y += 1
+      }
+      file << '</svg>'
+    }
+  end
+
+  #--------------------------------------------------------------
+  # Save SVG compressed
+  #--------------------------------------------------------------
+
+  def save_svg_compressed(filename, back)
+    size = width * height << 2
+    data = ' ' * size
+    read(0, 0, data, size)
+    data = data.unpack('C*')
+    open(filename,'w') {|file|
+      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
+      file << "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back[2]},#{back[1]},#{back[0]})\"/>\n"
+      index = 0
+      height.times {|y|
+        width.times {|x|
+          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index+2]},#{data[index+1]},#{data[index]})\"/>\n" if back != data[index, 3]
+          index += 4
+        }
       }
       file << '</svg>'
     }
