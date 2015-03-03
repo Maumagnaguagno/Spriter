@@ -22,7 +22,11 @@
 # - Color based on neighbor count
 #-----------------------------------------------
 
-#require './Bitmap'
+require './Image'
+
+#-----------------------------------------------
+# Spriter
+#-----------------------------------------------
 
 class Spriter
 
@@ -39,7 +43,7 @@ class Spriter
     # Image proportion
     @width = width # >= 1
     @height = height # >= 1
-    @image = Array.new(width * height, 0)
+    @grid = Array.new(width * height, 0)
     # Seed Random
     srand(seed) if seed
   end
@@ -95,7 +99,7 @@ class Spriter
     limit_y.times {|y|
       falloff_y = probmax * send(falloff, range_y, y)
       limit_x.times {|x|
-        @image[x + index_y] = 1 if rand(101) <= probmin + falloff_y * send(falloff, range_x, x)
+        @grid[x + index_y] = 1 if rand(101) <= probmin + falloff_y * send(falloff, range_x, x)
       }
       index_y += @width
     }
@@ -104,16 +108,16 @@ class Spriter
     limit_y.times {|y|
       limit_x.times {|x|
         count = 0
-        AROUND.each {|i,j| count += 1 if @image[x + i + (y + j) * @width] == 1}
+        AROUND.each {|i,j| count += 1 if @grid[x + i + (y + j) * @width] == 1}
         if count == 1 and rand(101) <= clean
-          @image[x + index_y] = 0
+          @grid[x + index_y] = 0
         elsif count.zero?
           if rand(101) <= modify
             case modifier
             when :remove
-              @image[x + index_y] = 0
+              @grid[x + index_y] = 0
             when :extend
-              @image[x + rand(3).pred + (y + rand(3).pred) * @width] = 1
+              @grid[x + rand(3).pred + (y + rand(3).pred) * @width] = 1
             end
           end
         end
@@ -121,19 +125,20 @@ class Spriter
       index_y += @width
     }
     # Mirror
+=begin
     index_y = 0
     if mirror_x
       if mirror_y
         index_mirror = (@width * @height).pred
         limit_y.times {
-          limit_x.times {|x| @image[index_mirror - x] = @image[x + index_y]}
+          limit_x.times {|x| @grid[index_mirror - x] = @grid[x + index_y]}
           index_mirror -= @width
           index_y += @width
         }
       else
         index_mirror = @width.pred
         limit_y.times {
-          limit_x.times {|x| @image[index_mirror - x] = @image[x + index_y]}
+          limit_x.times {|x| @grid[index_mirror - x] = @grid[x + index_y]}
           index_mirror += @width
           index_y += @width
         }
@@ -141,11 +146,28 @@ class Spriter
     elsif mirror_y
       index_mirror = @height.pred * @width
       limit_y.times {
-        limit_x.times {|x| @image[x + index_mirror] = @image[x + index_y]}
+        limit_x.times {|x| @grid[x + index_mirror] = @grid[x + index_y]}
         index_mirror -= @width
         index_y += @width
       }
     end
+=end
+    index_y = color = 0
+    limit_y.times {|y|
+      limit_x.times {|x|
+        color = @grid[x + index_y]
+        if mirror_x
+          @grid[@width.pred - x + index_y] = color
+        end
+        if mirror_y
+          @grid[x + (@height.pred - y) * @width] = color
+          if mirror_x
+            @grid[@width.pred - x + (@height.pred - y) * @width] = color
+          end
+        end
+      }
+      index_y += @width
+    }
   end
 
   #-----------------------------------------------
@@ -157,7 +179,7 @@ class Spriter
     index = 0
     @height.times {
       @width.times {
-        str << @image[index]
+        str << @grid[index]
         index += 1
       }
       str << "\n"
@@ -169,12 +191,20 @@ class Spriter
   # Save
   #-----------------------------------------------
 
-  def save(filename, ext = 'bmp', front = 0x00FF00, back = 0)
-    bmp = Bitmap.new(@width, @height, @image.map {|i| i.zero? ? back : front})
-    if ext == 'bmp'
-      bmp.save("#{filename}.bmp")
+  def save(filename, ext = 'bmp', front = [0,255,0,255], back = [0,0,0,255])
+    # [R,G,B,A] to BGRA32
+    front = (front[0,3].reverse! << front.last).pack('c4')
+    back = (back[0,3].reverse! << back.last).pack('c4')
+    pixels = ''
+    @grid.each {|i| pixels << (i.zero? ? back : front)}
+    img = Image.new(@width, @height).write(0, 0, pixels, pixels.size)
+    case ext
+    when 'bmp'
+      img.save_bmp("#{filename}.bmp")
+    when 'png'
+      img.save_png("#{filename}.png", Image::RGB)
     else
-      bmp.save_png("#{filename}.png", Bitmap::RGB)
+      raise "Unknown extension #{ext}"
     end
   end
 end
@@ -186,11 +216,12 @@ if $0 == __FILE__
   begin
     t = Time.now.to_f
     div = '-' * 32
+    ext = 'png'
     100.times {|seed|
       spt = Spriter.new(32, 32, seed)
       spt.generate(87, 13)
-      puts spt.to_s, div
-      #spt.save("spriter/sprite_#{seed}",'png')
+      #puts spt.to_s, div
+      spt.save("spriter/#{ext}/sprite_#{seed}",ext)
     }
     p Time.now.to_f - t
   rescue Interrupt
