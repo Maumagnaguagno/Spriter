@@ -1,10 +1,15 @@
-# Spriter
-Sprite generator  
-Based on http://tools.putpixel.com/spritegen.html
 
-My favorites are the old man and the puma:
-![Old man](https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_64.svg)
-![Puma](https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_65.svg)
+# Spriter
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_65.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
+</a>
+
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_64.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
+</a>
+
+  Sprite generator
+  Based on http://tools.putpixel.com/spritegen.html
 
 I wanted cool sprites without the creativity block that always happens...  
 Soon I found the site of putpixel generating several small sprites and thought: **cool, but it is not Ruby...**
