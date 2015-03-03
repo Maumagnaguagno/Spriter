@@ -45,7 +45,7 @@ img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
 img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed, the best (149 bytes)
 ```
-You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7. I need more tests to see if this behavior maintains. But BMPs work just fine and can be loaded with ```img = Image.load_bmp2(filename)```, noticed a ```2```? This happens because I have a C version as the default one, some large bitmaps take a long time to load and fill the alpha channel to each pixel, therefore I maintained the old version under a different name. You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement. I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
+You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7. I need more tests to see if this behavior maintains. But BMPs work just fine (if encoding is set properly) and can be loaded with ```img = Image.load_bmp2(filename)```, noticed a ```2```? This happens because I have a C version as the default one, some large bitmaps take a long time to load and fill the alpha channel to each pixel, therefore I maintained the old version under a different name. You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement. I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
 If you do not understand at first sight some of my tricks you should read this explanation as a guide to the binary format of BMPs: https://practicingruby.com/articles/binary-file-formats  
 I just optimized further for my specific need/love of BMPs with 24 bits.
@@ -96,3 +96,4 @@ ext = 'bmp'
 - Better PNG support, I believe there is a problem with this version for some image proportions
 - Compress SVG, define a background rect and only the foreground pixels, cluster them into rects.
   - It will work, but how complex is to find the minimal set of rects in a grid?
+- Encoding problem with file reading for RUBY_VERSION > 1.8.7
