@@ -12,8 +12,9 @@
   Based on http://tools.putpixel.com/spritegen.html
 
 I wanted cool sprites without the creativity block that always happens...  
-Soon I found the site of putpixel generating several small sprites and thought: **cool, but it is not Ruby...**
-Inspecting the element I found the source with **DO WTF YOU WANT TO PUBLIC LICENSE**, and I started.
+Soon I found the site of putpixel generating several small sprites and thought:  
+  **Cool, but it is not Ruby...**  
+Inspecting the element I found the source with the WTFPL (http://www.wtfpl.net/), and got started.
 
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 Then the integer probability and seed control made easier to handle the beast. Some time after that I moved most of the Image class to C to achieve speed enough for effects during game execution and let the old pure Ruby class waiting.
