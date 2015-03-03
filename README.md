@@ -35,9 +35,9 @@ img = Image.new(width, height)
 red_rgb = [255,0,0]
 # But we need to convert before anything (add alpha channel)
 red_bgra = (red_rgb.reverse << 255).pack('C4')
-# We could write several times, but I want to write at once all the pixels
+# We could write several times, but I want to write all the pixels in a single call
 data = red_bgra * (width * height)
-# Our data size is 4 times larger, (BGRA) * 4, but a shift is faster with integers
+# Our data starts at 0 and will draw from 0 to the data size
 img.write(0, 0, data, data.size)
 # Which extension we need? Save them all
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
