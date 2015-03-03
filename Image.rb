@@ -196,4 +196,29 @@ class Image
   def self.chunk(type, data)
     [data.size, type, data, Zlib.crc32(type << data)].pack('NA4A*N')
   end
+  
+  #--------------------------------------------------------------
+  # Save SVG
+  #--------------------------------------------------------------
+
+  def save_svg(filename)
+    size = width * height << 2
+    data = ' ' * size
+    read(0, 0, data, size)
+    data = data.unpack('C*')
+    open(filename,'w') {|file|
+      file << '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">'
+      index = y = 0
+      height.times {
+        x = 0
+        width.times {
+          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index]}, #{data[index+1]}, #{data[index+2]})\" />"
+          index += 4
+          x += 1
+        }
+        y += 1
+      }
+      file << '</svg>'
+    }
+  end
 end
