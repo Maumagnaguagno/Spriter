@@ -19,7 +19,7 @@ Inspecting the element I found the source with the [WTFPL](http://www.wtfpl.net/
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 Then the integer probability and seed control made easier to handle the beast. Some time after that I moved most of the Image class to C to achieve speed enough for effects during game execution and let the old pure Ruby class waiting.
 Found this project the other day lost in my HD, optimized a little bit, made C and Ruby talk again and here we are.
-This version lacks some common Image methods as I have to downgrade/upgrade them from my C implementation. Why not a gem project? I really do not like to recompile/install a gem for every Ruby/Plataform I am developing, so I have this C version only for my machine right now.
+This version lacks some common Image methods as I have to downgrade/upgrade them from my C implementation. Why not a gem project? I really do not like to recompile/install a gem for every Ruby/Platform I am developing, so I have this C version only for my machine right now.
 
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to render, save and load files. It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
 
