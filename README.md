@@ -23,7 +23,7 @@ This version lacks some common Image methods as I have to downgrade/upgrade them
 
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to render, save and load files. It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
 
-# How the Image class works
+## How the Image class works
 Before you have sprites, you need images. You can create your images from scratch, actually, you can only create from scratch until I add more methods to Ruby. And since BMP files are my favorite, the images use BGRA32 internally to hold the channels in a packed String.
 ```Ruby
 require './Image'
@@ -53,7 +53,7 @@ I just optimized further for my specific need/love of BMPs with 24 bits.
 SVGs are very recent to me, never explored them earlier. The default method to save SVGs is extremely simple and creates a big file, while the second creates a single rect for the background, removing several pixels from the grid.
 The next step is to cluster the remaining pixels in few rects.
 
-# How Spriter works
+## How Spriter works
 Ok, so now we (You and I!) can play with images. Yeah! But none of us know how to draw, even less without interface. But we are not alone, the computer also does not know. Now the three of us make the non-artist club. We know that sometimes we draw OK, but it is one in ten. The computer can draw much faster those ten... Humm... OK, what if we asked for a lot of images with different random seeds and pixel distribution probabilities. It works! Creativity is just brute-force with insight now! We can look at the images generated and complete the blanks of our computer friend.
 
 It is important to note that you can reproduce your results giving the same ~~seed~~ inspiration to the computer. If you do not need to save the images to files there is no need to require the Image class. Spriter is grid-based (zeroes and ones) and can print without problems to the terminal.
@@ -65,8 +65,9 @@ require './Image'
 ext = 'bmp'
 # 100 must be enough inspiration
 100.times {|seed|
+  srand(seed)
   # 32x32 is my style, bigger images are harder to create with cool effects
-  spt = Spriter.new(32, 32, seed)
+  spt = Spriter.new(32, 32)
   # I am only giving the mirroring probabilities here
   # 87% of replicating the left on the right
   # 13% of replicating the top on the bottom
@@ -90,7 +91,7 @@ ext = 'bmp'
 }
 ```
 
-# ToDo's
+## ToDo's
 - Optional clean step
 - Color based on neighbor count (may take a lot of CPU)
 - Better PNG support, I believe there is a problem with this version for some image proportions
