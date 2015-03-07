@@ -94,6 +94,6 @@ ext = 'bmp'
 - Optional clean step
 - Color based on neighbor count (may take a lot of CPU)
 - Better PNG support, I believe there is a problem with this version for some image proportions
-- Compress SVG, define a background rect and only the foreground pixels, cluster them into rects.
+- Compress SVG, ~~define a background rect and~~ cluster foreground pixels into rects.
   - It will work, but how complex is to find the minimal set of rects in a grid?
-- Encoding problem with file reading for RUBY_VERSION > 1.8.7
+- Encoding problem with file reading for ```RUBY_VERSION > 1.8.7```
