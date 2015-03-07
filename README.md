@@ -51,7 +51,7 @@ If you do not understand at first sight some of my tricks you should read this e
 I just optimized further for my specific need/love of BMPs with 24 bits.
 
 SVGs are very recent to me, never explored them earlier. The default method to save SVGs is extremely simple and creates a big file, while the second creates a single rect for the background, removing several pixels from the grid.
-The next step is to cluster the remaining pixels in few rects.
+The next step is to cluster the remaining equal pixels in the same line into a single rect. This line compression may help to decrease the final size, but makes more tests during the transformation. This is not a sign that all images will be compressed, images with several colors will not take advantage of this, only taking longer to be saved. The positive side is to exchange CPU time with HD space/time, as a smaller file will take less HD and less cycles to be written. And I will stop the compression here, this already generate reasonably good results for me, no need to cluster pixels by row now.
 
 ## How Spriter works
 Ok, so now we (You and I!) can play with images. Yeah! But none of us know how to draw, even less without interface. But we are not alone, the computer also does not know. Now the three of us make the non-artist club. We know that sometimes we draw OK, but it is one in ten. The computer can draw much faster those ten... Humm... OK, what if we asked for a lot of images with different random seeds and pixel distribution probabilities. It works! Creativity is just brute-force with insight now! We can look at the images generated and complete the blanks of our computer friend.
@@ -92,9 +92,11 @@ ext = 'bmp'
 ```
 
 ## ToDo's
-- Optional clean step
-- Color based on neighbor count (may take a lot of CPU)
-- Better PNG support, I believe there is a problem with this version for some image proportions
-- Compress SVG, ~~define a background rect and~~ cluster foreground pixels into rects.
-  - It will work, but how complex is to find the minimal set of rects in a grid?
-- Encoding problem with file reading for ```RUBY_VERSION > 1.8.7```
+- Dangerous
+  - Encoding problem with BMP loading for ```RUBY_VERSION > 1.8.7```
+  - Better PNG support, I believe there is a problem with this version for some image proportions
+- Common
+  - Optional clean step
+- Maybe
+  - Color based on neighbor count (may take a lot of CPU)
+  - Better compression of SVG, take advantage of rows too (squares)
