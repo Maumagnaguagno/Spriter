@@ -152,9 +152,9 @@ class Spriter
         limit_y.times {
           limit_x.times {|x| @grid[mirror_x - x] = @grid[mirror_y + x] = @grid[mirror_xy - x] = @grid[x + index_y]}
           index_y += @width
-          mirror_xy -= @width
           mirror_x += @width
           mirror_y -= @width
+          mirror_xy -= @width
         }
       else
         mirror_y = @height.pred * @width
@@ -224,13 +224,13 @@ if $0 == __FILE__
   begin
     t = Time.now.to_f
     div = '-' * 32
-    ext = 'bmp'
+    ext = 'svgx'
     100.times {|seed|
       srand(seed)
       spt = Spriter.new(32, 32)
       spt.generate(87, 13)
       #puts spt.to_s, div
-      spt.save("spriter/#{ext}/sprite_#{seed}",ext)
+      spt.save("spriter/#{ext}/sprite_#{seed}", ext)
     }
     p Time.now.to_f - t
   rescue Interrupt
