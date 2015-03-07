@@ -219,17 +219,26 @@ class Image
   # Save SVG
   #--------------------------------------------------------------
 
-  def save_svg(filename)
+  def save_svg_compressed(filename, back)
     size = width * height << 2
     data = ' ' * size
     read(0, 0, data, size)
     data = data.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
+      file << "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back[2]},#{back[1]},#{back[0]})\"/>\n"
       index = 0
       height.times {|y|
+        w = 0
+        color = data[index, 3]
         width.times {|x|
-          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index+2]},#{data[index+1]},#{data[index]})\"/>\n"
+          if color == data[index, 3]
+            w += 1
+          else
+            file << "<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color[2]},#{color[1]},#{color[0]})\"/>\n" if color != back
+            w = 1
+            color = data[index, 3]
+          end
           index += 4
         }
       }
