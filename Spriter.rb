@@ -42,13 +42,11 @@ class Spriter
   # Initialize
   #-----------------------------------------------
 
-  def initialize(width, height, seed = nil)
+  def initialize(width, height)
     # Image proportion
-    @width = width # >= 1
-    @height = height # >= 1
+    @width = width
+    @height = height
     @grid = Array.new(width * height, 0)
-    # Seed Random
-    srand(seed) if seed
   end
 
   #-----------------------------------------------
@@ -228,7 +226,8 @@ if $0 == __FILE__
     div = '-' * 32
     ext = 'bmp'
     100.times {|seed|
-      spt = Spriter.new(32, 32, seed)
+      srand(seed)
+      spt = Spriter.new(32, 32)
       spt.generate(87, 13)
       #puts spt.to_s, div
       spt.save("spriter/#{ext}/sprite_#{seed}",ext)
