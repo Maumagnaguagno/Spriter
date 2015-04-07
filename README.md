@@ -33,7 +33,7 @@ width = height = 32
 img = Image.new(width, height)
 # I want to fill it with red now
 red_rgb = [255,0,0]
-# But we need to convert before anything (add alpha channel)
+# But we need to convert before anything (add alpha channel, RGB => BGRA)
 red_bgra = (red_rgb.reverse << 255).pack('C4')
 # We could write several times, but I want to write all the pixels in a single call
 data = red_bgra * (width * height)
