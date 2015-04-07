@@ -62,7 +62,8 @@ class Spriter
   #-----------------------------------------------
 
   def linear(range, pos)
-    [0, [1 - (range - pos + 0.5).abs / range, 1].min].max
+    i = 1 - (range - pos + 0.5).abs / range
+    i < 0 ? 0 : i < 1 ? i : 1
   end
 
   #-----------------------------------------------
