@@ -241,6 +241,7 @@ class Image
           end
           index += 4
         }
+        file << "<rect x=\"#{width.pred - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color[2]},#{color[1]},#{color[0]})\"/>\n" if w > 1 and color != back
       }
       file << '</svg>'
     }
