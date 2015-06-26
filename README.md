@@ -95,7 +95,6 @@ ext = 'bmp'
 - Dangerous
   - Encoding problem with BMP loading for ```RUBY_VERSION > 1.8.7```
   - Better PNG support, I believe there is a problem with this version for some image proportions
-  - SVG compressed bug with lines
 - Common
   - Optional clean step
 - Maybe
