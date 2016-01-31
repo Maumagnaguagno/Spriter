@@ -1,15 +1,13 @@
-
-# Spriter
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_65.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
+# Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgx/sprite_65.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgx/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
 </a>
 
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_64.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/images/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgx/sprite_64.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgx/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
 </a>
 
-  Sprite generator
-  Based on [Spritegen](http://tools.putpixel.com/spritegen.html)
+Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)
 
 I wanted cool sprites without the creativity block that always happens...  
 Soon I found the site of putpixel generating several small sprites and thought:  
@@ -25,6 +23,7 @@ The goal is not to have a Sprite generator alone, but a consistent example of an
 
 ## How the Image class works
 Before you have sprites, you need images. You can create your images from scratch, actually, you can only create from scratch until I add more methods to Ruby. And since BMP files are my favorite, the images use BGRA32 internally to hold the channels in a packed String.
+
 ```Ruby
 require './Image'
 
@@ -45,6 +44,7 @@ img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
 img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed (no background), the best (149 bytes)
 ```
+
 You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7. I need more tests to see if this behavior maintains. But BMPs work just fine (if encoding is set properly) and can be loaded with ```img = Image.load_bmp2(filename)```, noticed a ```2```? This happens because I have a C version as the default one, some large bitmaps take a long time to load and fill the alpha channel to each pixel, therefore I maintained the old version under a different name. You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement. I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
 If you do not understand at first sight some of my tricks you should read this explanation as a guide to the binary format of BMPs: https://practicingruby.com/articles/binary-file-formats  
@@ -92,11 +92,10 @@ ext = 'bmp'
 ```
 
 ## ToDo's
-- Dangerous
-  - Encoding problem with BMP loading for ```RUBY_VERSION > 1.8.7```
-  - Better PNG support, I believe there is a problem with this version for some image proportions
-- Common
-  - Optional clean step
+- API documentation
+- More tests
+- Encoding problem with BMP loading for ```RUBY_VERSION > 1.8.7```
+- Better PNG support, I believe there is a problem with this version for some image proportions
 - Maybe
   - Color based on neighbor count (may take a lot of CPU)
   - Better compression of SVG, take advantage of rows too (squares)
