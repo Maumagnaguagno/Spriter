@@ -18,18 +18,15 @@
 # Mar 2015
 # - Fall off x outside inner loop
 # - Correct xy mirroring
+# Jan 2016
+# - Optional clean step
 #-----------------------------------------------
 # TODOs
-# - Optional clean step
 # - Support odd proportions
 # - Color based on neighbor count
 #-----------------------------------------------
 
 require './Image'
-
-#-----------------------------------------------
-# Spriter
-#-----------------------------------------------
 
 class Spriter
 
@@ -62,8 +59,8 @@ class Spriter
   #-----------------------------------------------
 
   def linear(range, pos)
-    i = 1 - (range - pos + 0.5).abs / range
-    i < 0 ? 0 : i < 1 ? i : 1
+    x = 1 - (range - pos + 0.5).abs / range
+    x < 0 ? 0 : x < 1 ? x : 1
   end
 
   #-----------------------------------------------
@@ -71,7 +68,7 @@ class Spriter
   #-----------------------------------------------
 
   def cosine(range, pos)
-    x = (1 - (range - pos + 0.5).abs / range)
+    x = 1 - (range - pos + 0.5).abs / range
     (1 - Math.cos(x * Math::PI)) * 0.5
   end
 
@@ -105,47 +102,32 @@ class Spriter
       index_y += @width
     }
     # Clean
-    index_y = 0
-    limit_y.times {|y|
-      limit_x.times {|x|
-        count = 0
-        AROUND.each {|i,j| count += 1 if @grid[x + i + (y + j) * @width] == 1}
-        if count == 1 and rand(101) <= clean
-          @grid[x + index_y] = 0
-        elsif count.zero?
-          if rand(101) <= modify
-            case modifier
-            when :remove
-              @grid[x + index_y] = 0
-            when :extend
-              @grid[x + rand(3).pred + (y + rand(3).pred) * @width] = 1
+    if clean and modify
+      index_y = 0
+      limit_y.times {|y|
+        limit_x.times {|x|
+          count = 0
+          AROUND.each {|i,j| count += 1 if @grid[x + i + (y + j) * @width] == 1}
+          case count
+          when 1
+            @grid[x + index_y] = 0 if rand(101) <= clean
+          when 0
+            if rand(101) <= modify
+              case modifier
+              when :remove
+                @grid[x + index_y] = 0
+              when :extend
+                @grid[x + rand(3).pred + (y + rand(3).pred) * @width] = 1
+              end
             end
           end
-        end
+        }
+        index_y += @width
       }
-      index_y += @width
-    }
+    end
     # Mirror
-=begin
-    index_y = 0
-    limit_y.times {|y|
-      limit_x.times {|x|
-        if mirror_x
-          color = @grid[x + index_y]
-          @grid[@width.pred - x + index_y] = color
-          if mirror_y
-            @grid[x + (@height.pred - y) * @width] = color
-            @grid[@width.pred - x + (@height.pred - y) * @width] = color
-          end
-        elsif mirror_y
-          @grid[x + (@height.pred - y) * @width] = @grid[x + index_y]
-        end
-      }
-      index_y += @width
-    }
-=end
-    index_y = 0
     if mirror_y
+      index_y = 0
       if mirror_x
         mirror_xy = (@width * @height).pred
         mirror_x = @width.pred
@@ -166,6 +148,7 @@ class Spriter
         }
       end
     elsif mirror_x
+      index_y = 0
       mirror_x = @width.pred
       limit_y.times {
         limit_x.times {|x| @grid[mirror_x - x] = @grid[x + index_y]}
@@ -181,12 +164,9 @@ class Spriter
 
   def to_s
     str = ''
-    index = 0
+    index = -1
     @height.times {
-      @width.times {
-        str << @grid[index]
-        index += 1
-      }
+      @width.times {str << @grid[index += 1]}
       str << "\n"
     }
     str
@@ -212,8 +192,7 @@ class Spriter
       img.save_svg("#{filename}.svg")
     when 'svgx'
       img.save_svg_compressed("#{filename}.svg", back.unpack('C3'))
-    else
-      raise "Unknown extension #{ext}"
+    else raise "Unknown extension #{ext}"
     end
   end
 end
@@ -231,7 +210,7 @@ if $0 == __FILE__
       spt = Spriter.new(32, 32)
       spt.generate(87, 13)
       #puts spt.to_s, div
-      spt.save("spriter/#{ext}/sprite_#{seed}", ext)
+      spt.save("sprites/#{ext}/sprite_#{seed}", ext)
     }
     p Time.now.to_f - t
   rescue Interrupt
