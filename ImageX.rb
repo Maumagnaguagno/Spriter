@@ -1,3 +1,5 @@
+require 'zlib'
+
 class Image
 
   BMP_HEADER = 'sls2l4s2l6'
