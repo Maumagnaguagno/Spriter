@@ -27,6 +27,7 @@
 #-----------------------------------------------
 
 require './Image'
+require './ImageX'
 
 class Spriter
 
