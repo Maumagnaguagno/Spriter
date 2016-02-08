@@ -1,7 +1,7 @@
 require 'test/unit'
 require './Spriter'
 
-class Splinter < Test::Unit::TestCase
+class Puma < Test::Unit::TestCase
 
 PUMA = "\0\0\0\0\0\0\0\0\0\1\0\1\1\0\0\0\0\0\0\1\1\0\1\0\0\0\0\0\0\0\0\0
 \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0
@@ -37,7 +37,7 @@ PUMA = "\0\0\0\0\0\0\0\0\0\1\0\1\1\0\0\0\0\0\0\1\1\0\1\0\0\0\0\0\0\0\0\0
 \0\0\0\0\0\0\0\0\0\0\0\0\1\0\0\0\0\0\0\1\0\0\0\0\0\0\0\0\0\0\0\0
 "
 
-  def test_spriter_puma
+  def test_puma
     srand(65)
     spt = Spriter.new(32, 32)
     spt.generate(87, 13)
