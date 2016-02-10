@@ -87,8 +87,8 @@ require 'zlib' # PNG compression
 require './Image'
 require './ImageX'
 
-100.times {|seed|
-  srand(seed)
+100.times {|inspiration|
+  srand(inspiration)
   # 32x32 is my style, bigger images are harder to create with cool effects
   spt = Spriter.new(32, 32)
   # Generate a sprite with:
@@ -99,9 +99,9 @@ require './ImageX'
   # If you want to see it in the Terminal, print it
   # just make sure the character "\0" is invisible and "\1" is visible
   puts spt.to_s, '-' * 32
-  # Save it to a file
+  # Save it to a file, sprites/bmp/ must already exist
   # You can also give foreground and background colors default is green on black
-  spt.save("sprites/bmp/sprite_#{seed}", 'bmp', [0,255,0,255], [0,0,0,255])
+  spt.save("sprites/bmp/sprite_#{inspiration}", 'bmp', [0,255,0,255], [0,0,0,255])
 }
 ```
 
