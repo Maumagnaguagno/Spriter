@@ -103,7 +103,7 @@ class Spriter
       index_y += @width
     }
     # Clean
-    if clean and modify
+    if clean or modify
       index_y = 0
       limit_y.times {|y|
         limit_x.times {|x|
