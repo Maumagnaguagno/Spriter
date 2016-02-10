@@ -24,10 +24,10 @@ It is a shame that image and sound are not first class citizens of modern langua
 
 ## How Image works
 Before you have sprites, you need images. 
-And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String.
+And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels ```BGRABGRABGRA```.
 Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
-Alpha is used for transparency effects.
-We can easily pack an Array ```[B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```.
+Alpha is used for transparency effects, usually used in PNGs.
+We can easily pack an Array ```color = [B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```, where B, G, R and A are Fixnums between 0 and 255.
 
 ```Ruby
 require 'zlib' # PNG compression
