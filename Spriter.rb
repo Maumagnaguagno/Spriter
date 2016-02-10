@@ -212,7 +212,9 @@ if $0 == __FILE__
   begin
     t = Time.now.to_f
     div = '-' * 32
-    ext = 'svgx'
+    ext = ARGV.first || 'bmp'
+    Dir.mkdir('sprites') unless File.directory?('sprites')
+    Dir.mkdir("sprites/#{ext}") unless File.directory?("sprites/#{ext}")
     100.times {|seed|
       srand(seed)
       spt = Spriter.new(32, 32)
