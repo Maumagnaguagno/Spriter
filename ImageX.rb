@@ -21,7 +21,7 @@ class Image
   # Load BMP
   #-----------------------------------------------
 
-  def self.load_bmp2(filename)
+  def self.load_bmp(filename)
     image = nil
     open(filename,'rb') {|file|
       header_unpack = file.read(54).unpack(BMP_HEADER)
