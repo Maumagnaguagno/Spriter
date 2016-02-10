@@ -88,7 +88,7 @@ require './ImageX'
 
 100.times {|inspiration|
   srand(inspiration)
-  # 32x32 is my style, bigger images are harder to create with cool effects
+  # 32x32 is my style, bigger images are harder to generate cool effects
   spt = Spriter.new(32, 32)
   # Generate a sprite with:
   # 87% of replicating the left on the right
