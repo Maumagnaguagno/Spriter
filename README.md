@@ -93,7 +93,7 @@ require './ImageX'
   # Generate a sprite with:
   # 87% of replicating the left on the right
   # 13% of replicating the top on the bottom
-  # You can also control the distribution function, probabilities and cleaning/adding lose pixels
+  # You can also control the distribution function, probabilities and cleaning/adding loose pixels
   spt.generate(87, 13)
   # If you want to see it in the Terminal, print it
   # just make sure the character "\0" is invisible and "\1" is visible
