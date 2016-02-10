@@ -31,7 +31,7 @@ class Image
       padding = width & 3
       w3 = width << 3
       index_image = width.pred * height << 2
-      heigt.times {
+      height.times {
         width.times {
           image.write(index_image, 0, file.read(3) << 255, 4)
           index_image += 4
