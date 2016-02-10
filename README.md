@@ -106,6 +106,5 @@ require './ImageX'
 
 ## ToDo's
 - API documentation
-- More tests
-- Test BMP and PNG with different image proportions.
+- More tests (Spriter, BMP and PNG with different image proportions)
 - Optional color based on neighbor count (may take a lot of CPU)
