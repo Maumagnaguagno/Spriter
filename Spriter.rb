@@ -179,8 +179,8 @@ class Spriter
 
   def to_image(front = [0,255,0,255], back = [0,0,0,255])
     # [R,G,B,A] to BGRA32
-    front = (front[0,3].reverse! << front.last).pack('C4')
-    back = (back[0,3].reverse! << back.last).pack('C4')
+    front = (front.first(3).reverse! << front.last).pack('C4')
+    back = (back.first(3).reverse! << back.last).pack('C4')
     pixels = ''
     @grid.each {|i| pixels << (i.zero? ? back : front)}
     Image.new(@width, @height).write(0, 0, pixels, pixels.size)
@@ -191,16 +191,15 @@ class Spriter
   #-----------------------------------------------
 
   def save(filename, ext = 'bmp', front = [0,255,0,255], back = [0,0,0,255])
-    img = to_image(front, back)
     case ext
     when 'bmp'
-      img.save_bmp("#{filename}.bmp")
+      to_image(front, back).save_bmp("#{filename}.bmp")
     when 'png'
-      img.save_png("#{filename}.png", Image::RGB)
+      to_image(front, back).save_png("#{filename}.png", Image::RGB)
     when 'svg'
-      img.save_svg("#{filename}.svg")
+      to_image(front, back).save_svg("#{filename}.svg")
     when 'svgc'
-      img.save_svg_compressed("#{filename}.svg", back.unpack('C3'))
+      to_image(front, back).save_svg_compressed("#{filename}.svg", back.first(3).reverse!)
     else raise "Unknown extension #{ext}"
     end
   end
