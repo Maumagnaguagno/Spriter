@@ -22,12 +22,12 @@ A Spriter class in ```Spriter.rb``` make use of the Image class.
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to save and load files.
 It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
 
-## How the Image class works
+## How Image works
 Before you have sprites, you need images. 
 And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String.
 Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
 Alpha is used for transparency effects.
-We can easily pack an Array ```[B,G,R,A]``` to a String BGRA32 packing four chars, ```color.pack('C4')```.
+We can easily pack an Array ```[B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```.
 
 ```Ruby
 require 'zlib' # PNG compression
@@ -36,21 +36,21 @@ require './ImageX'
 
 width = height = 32
 img = Image.new(width, height)
-red_rgb = [255,0,0]
+red_bgr = [255,0,0].reverse
 # add alpha channel, RGB => BGRA32
-red_bgra = (red_rgb.reverse << 255).pack('C4')
+red_bgra = (red_bgr << 255).pack('C4')
 # Fill image with red in a single call
 data = red_bgra * (width * height)
 img.write(0, 0, data, data.size)
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
-img.save_svg_compressed('red2.svg', red_rgb.reverse) # SVGs compressed (149 bytes)
+img.save_svg_compressed('red2.svg', red_bgr) # SVGs compressed (149 bytes)
 ```
 
 You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7.
 I need more tests to see if this behavior maintains.
-You should note that I only support one type of BMP file with 24 bits per pixels, therefore palette based ones are up to you to implement.
+You should note that I only support one type of BMP file with 24 bits per pixel, therefore palette based ones are up to you to implement.
 I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
 If you do not understand at first sight part of my implementation you should read this explanation as a guide to the binary format of BMPs: https://practicingruby.com/articles/binary-file-formats  
