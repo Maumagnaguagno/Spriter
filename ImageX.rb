@@ -2,7 +2,7 @@ require 'zlib'
 
 class Image
 
-  BMP_HEADER = 'sls2l4s2l6'
+  BMP_HEADER = 'sls2l4s2x24'
   RGB = 2
   RGBA = 6
 
@@ -14,7 +14,7 @@ class Image
     # BMP header
     [19778, (((24 * width + 31) >> 5) * height << 2) + 54, 0, 0, 54,
     # DIB header
-    40, width, height, 1, 24, 0, 0, 0, 0, 0, 0].pack(BMP_HEADER)
+    40, width, height, 1, 24].pack(BMP_HEADER)
   end
 
   #-----------------------------------------------
