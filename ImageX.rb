@@ -180,7 +180,7 @@ class Image
       index = 0
       height.times {|y|
         width.times {|x|
-          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index+2]},#{data[index+1]},#{data[index]})\"/>\n"
+          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index,3].reverse!.join(',')})\"/>\n"
           index += 4
         }
       }
@@ -199,7 +199,7 @@ class Image
     data = data.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
-      file << "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back[2]},#{back[1]},#{back[0]})\"/>\n"
+      file << "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back.reverse!.join(',')})\"/>\n"
       index = 0
       height.times {|y|
         w = 0
@@ -208,13 +208,13 @@ class Image
           if color == data[index, 3]
             w += 1
           else
-            file << "<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color[2]},#{color[1]},#{color[0]})\"/>\n" if color != back
+            file << "<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color.reverse!.join(',')})\"/>\n" if color != back
             w = 1
             color = data[index, 3]
           end
           index += 4
         }
-        file << "<rect x=\"#{width - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color[2]},#{color[1]},#{color[0]})\"/>\n" if color != back
+        file << "<rect x=\"#{width - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color.reverse!.join(',')})\"/>\n" if color != back
       }
       file << '</svg>'
     }
