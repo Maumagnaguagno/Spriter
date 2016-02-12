@@ -2,7 +2,7 @@ require 'zlib'
 
 class Image
 
-  BMP_HEADER = 'sls2l4s2x24'
+  BMP_HEADER = 'slx4l4s2x24'
   RGB = 2
   RGBA = 6
 
@@ -12,7 +12,7 @@ class Image
 
   def self.header_bmp(width, height)
     # BMP header
-    [19778, (((24 * width + 31) >> 5) * height << 2) + 54, 0, 0, 54,
+    [19778, (((24 * width + 31) >> 5) * height << 2) + 54, 54,
     # DIB header
     40, width, height, 1, 24].pack(BMP_HEADER)
   end
@@ -25,8 +25,8 @@ class Image
     image = nil
     open(filename,'rb') {|file|
       header_unpack = file.read(54).unpack(BMP_HEADER)
-      width = header_unpack[6]
-      height = header_unpack[7]
+      width = header_unpack[4]
+      height = header_unpack[5]
       image = new(width, height)
       padding = width & 3
       w3 = width << 3
