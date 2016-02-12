@@ -30,11 +30,16 @@ class Image
       image = new(width, height)
       padding = width & 3
       w3 = width << 3
+      index = 0
       index_image = (width * height.pred).pred << 2
+      data = file.read
       height.times {
-        width.times {image.write(index_image += 4, 0, file.read(3) << 255, 4)}
+        width.times {
+          image.write(index_image += 4, 0, data[index,3] << 255, 4)
+          index += 3
+        }
         index_image -= w3
-        file.pos += padding
+        index += padding
       }
     }
     image
