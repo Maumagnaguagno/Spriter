@@ -24,7 +24,7 @@ It is a shame that image and sound are not first class citizens of modern langua
 
 ## How Image works
 Before you have sprites, you need images. 
-And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels ```BGRABGRABGRA```.
+And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ```BGRABGRABGRA```.
 Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
 Alpha is used for transparency effects, usually used in PNGs.
 We can easily pack an Array ```color = [B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```, where B, G, R and A are Fixnums between 0 and 255.
@@ -53,12 +53,12 @@ I need more tests to see if this behavior maintains.
 You should note that I only support one type of BMP file with 24 bits per pixel, therefore palette based ones are up to you to implement.
 I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
-If you do not understand at first sight part of my implementation you should read this explanation as a guide to the binary format of BMPs: https://practicingruby.com/articles/binary-file-formats  
+If you do not understand at first sight part of my implementation you should read this [guide to the binary format of BMPs](https://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need/love of BMPs with 24 bits.
+Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Fixnums.
 
 SVGs are very recent to me, never explored them earlier.
-The default method to save SVGs is extremely simple and creates a big file, while the second creates a single rect for the background, removing several single pixel rects from the grid.
-The next step is to cluster the remaining equal pixels in the same line.
+The default method to save SVGs is extremely simple and creates a big file, while the compressed method creates a single rect for the background and cluster remaining equal pixels in lines.
 This line compression may help to decrease the final size, but makes more tests during the transformation.
 This is not a sign that all images will be compressed, images with several colors will not take advantage of this, only taking longer to be saved.
 The positive side is to exchange CPU time with HD space/time, as a smaller file will take less HD and less cycles to be written now, and read out in the future.
