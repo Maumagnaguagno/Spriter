@@ -93,23 +93,22 @@ class Image
           image = new(width, height)
         when 'IDAT'
           data = Zlib::Inflate.inflate(data)
-          index = index_image = 0
+          index = 0
+          index_image = -4
           if color_type == RGB
             height.times {
               index += 1
               width.times {
-                image.write(index_image, 0, data[index,3].reverse! << 255, 4)
+                image.write(index_image += 4, 0, data[index,3].reverse! << 255, 4)
                 index += 3
-                index_image += 4
               }
             }
           else
             height.times {
               index += 1
               width.times {
-                image.write(index_image, 0, data[index,3].reverse! << data[index+3], 4)
+                image.write(index_image += 4, 0, data[index,3].reverse! << data[index+3], 4)
                 index += 4
-                index_image += 4
               }
             }
           end
