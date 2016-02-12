@@ -31,7 +31,7 @@ We can easily pack an Array ```color = [B,G,R,A]``` to a BGRA32 String using ```
 
 ```Ruby
 require './Image'
-require './ImageX' # Requires zlib for PNG compression
+require './ImageX'
 
 width = height = 32
 img = Image.new(width, height)
@@ -81,8 +81,7 @@ The Image class is only used to save and load files, no need to require it other
 Spriter is grid-based (zeroes and ones) and can print without problems to the terminal.
 
 ```Ruby
-require './Image'
-require './ImageX' # Requires zlib for PNG compression
+require './Spriter'
 
 100.times {|inspiration|
   srand(inspiration)
