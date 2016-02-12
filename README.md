@@ -30,9 +30,8 @@ Alpha is used for transparency effects, usually used in PNGs.
 We can easily pack an Array ```color = [B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```, where B, G, R and A are Fixnums between 0 and 255.
 
 ```Ruby
-require 'zlib' # PNG compression
 require './Image'
-require './ImageX'
+require './ImageX' # Requires zlib for PNG compression
 
 width = height = 32
 img = Image.new(width, height)
@@ -82,9 +81,8 @@ The Image class is only used to save and load files, no need to require it other
 Spriter is grid-based (zeroes and ones) and can print without problems to the terminal.
 
 ```Ruby
-require 'zlib' # PNG compression
 require './Image'
-require './ImageX'
+require './ImageX' # Requires zlib for PNG compression
 
 100.times {|inspiration|
   srand(inspiration)
