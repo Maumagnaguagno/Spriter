@@ -128,17 +128,13 @@ class Image
     data = ' ' * size
     read(0, 0, data, size)
     img_data = ''
+    index = -4
     if color_type == RGBA
-      index = 0
       height.times {
         img_data << 0
-        width.times {
-          img_data << data[index, 3].reverse! << data[index+3]
-          index += 4
-        }
+        width.times {img_data << data[index += 4, 3].reverse! << data[index.pred]}
       }
     else
-      index = -4
       height.times {
         img_data << 0
         width.times {img_data << data[index += 4, 3].reverse!}
