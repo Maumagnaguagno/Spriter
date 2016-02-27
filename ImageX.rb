@@ -187,8 +187,8 @@ class Image
     read(0, 0, data, size)
     data = data.unpack('C*')
     open(filename,'w') {|file|
-      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
-      file << "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back.reverse!.join(',')})\"/>\n"
+      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n" <<
+              "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{back.reverse!.join(',')})\"/>\n"
       index = 0
       height.times {|y|
         w = 0
