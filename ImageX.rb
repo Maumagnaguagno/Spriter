@@ -58,7 +58,7 @@ class Image
       data = ' ' * size
       read(0, 0, data, size)
       padding = ' ' * (width & 3)
-      index = size - (width << 2) - 4
+      index = size - (width.succ << 2)
       w = width << 3
       height.times {
         width.times {file << data[index += 4, 3]}
