@@ -175,11 +175,10 @@ class Image
     data = data.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
-      index = 0
+      index = -4
       height.times {|y|
         width.times {|x|
-          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index,3].reverse!.join(',')})\"/>\n"
-          index += 4
+          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index += 4,3].reverse!.join(',')})\"/>\n"
         }
       }
       file << '</svg>'
