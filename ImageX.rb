@@ -82,10 +82,7 @@ class Image
         file.pos += 4
         case type
         when 'IHDR'
-          data = data.unpack('N2C5')
-          width = data.first
-          height = data[1]
-          color_type = data[3]
+          width, height, color_type = data.unpack('N2xC')
           image = new(width, height)
         when 'IDAT'
           data = Zlib::Inflate.inflate(data)
