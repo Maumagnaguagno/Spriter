@@ -139,7 +139,7 @@ class Image
   def self.save_png_data(filename, data, width, height, color_type)
     open(filename,'wb') {|file|
       file << "\x89PNG\r\n\x1a\n" <<
-              chunk('IHDR', [width, height, 8, color_type, 0, 0, 0].pack('N2C5')) <<
+              chunk('IHDR', [width, height, 8, color_type].pack('N2C2x3')) <<
               chunk('IDAT', Zlib::Deflate.deflate(data, 9)) <<
               "\0\0\0\0IEND\xAEB`\x82"
     }
