@@ -35,16 +35,13 @@ require './ImageX'
 
 width = height = 32
 img = Image.new(width, height)
-red_bgr = [255,0,0].reverse
-# add alpha channel, RGB => BGRA32
-red_bgra = (red_bgr << 255).pack('C4')
-# Fill image with red in a single call
-data = red_bgra * (width * height)
+# Fill image with red BGRA32 in a single write call
+data = [0, 0, 255, 255].pack('C4') * (width * height)
 img.write(0, 0, data, data.size)
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
-img.save_svg_compressed('red2.svg', red_bgr) # SVGs compressed (149 bytes)
+img.save_svg_compressed('red2.svg', 255, 0, 0) # SVGs compressed (149 bytes)
 ```
 
 You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7.
@@ -63,7 +60,7 @@ This is not a sign that all images will be compressed, images with several color
 The positive side is to exchange CPU time with HD space/time, as a smaller file will take less HD and less cycles to be written now, and read out in the future.
 
 ## How Spriter works
-Ok, so now we (You and I!) can play with images.
+Ok, so now we can play with images.
 Yeah!
 But none of us know how to draw, even less without interface.
 We are not alone, the computer also does not know.
@@ -97,7 +94,7 @@ require './Spriter'
   puts spt.to_s, '-' * 32
   # Save it to a file, sprites/bmp/ must already exist
   # You can also give foreground and background colors default is green on black
-  spt.save("sprites/bmp/sprite_#{inspiration}", 'bmp', [0,255,0,255], [0,0,0,255])
+  spt.save("sprites/bmp/sprite_#{inspiration}", 'bmp', 0,255,0,255, 0,0,0,255)
 }
 ```
 
