@@ -34,10 +34,9 @@ require './Image'
 require './ImageX'
 
 width = height = 32
-img = Image.new(width, height)
-# Fill image with red BGRA32 in a single write call
 data = [0, 0, 255, 255].pack('C4') * (width * height)
-img.write(0, 0, data, data.size)
+img = Image.new(width, height)
+img.write(0, 0, data, data.size) # Fill image with red BGRA32
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
 img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
