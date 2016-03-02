@@ -203,3 +203,4 @@ class Image
       file << '</svg>'
     }
   end
+end
