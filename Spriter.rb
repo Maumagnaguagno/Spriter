@@ -20,6 +20,8 @@
 # - Correct xy mirroring
 # Jan 2016
 # - Optional clean step
+# Mar 2016
+# - Removed array colors
 #-----------------------------------------------
 # TODOs
 # - Support odd proportions
@@ -177,10 +179,9 @@ class Spriter
   # to Image
   #-----------------------------------------------
 
-  def to_image(front = [0,255,0,255], back = [0,0,0,255])
-    # [R,G,B,A] to BGRA32
-    front = (front.first(3).reverse! << front.last).pack('C4')
-    back = (back.first(3).reverse! << back.last).pack('C4')
+  def to_image(r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
+    front = [b1, g1, r1, a1].pack('C4')
+    back = [b2, g2, r2, a2].pack('C4')
     pixels = ''
     @grid.each {|i| pixels << (i.zero? ? back : front)}
     Image.new(@width, @height).write(0, 0, pixels, pixels.size)
@@ -190,16 +191,16 @@ class Spriter
   # Save
   #-----------------------------------------------
 
-  def save(filename, ext = 'bmp', front = [0,255,0,255], back = [0,0,0,255])
+  def save(filename, ext = 'bmp', r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
     case ext
     when 'bmp'
-      to_image(front, back).save_bmp("#{filename}.bmp")
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_bmp("#{filename}.bmp")
     when 'png'
-      to_image(front, back).save_png("#{filename}.png", Image::RGB)
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_png("#{filename}.png", Image::RGB)
     when 'svg'
-      to_image(front, back).save_svg("#{filename}.svg")
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg("#{filename}.svg")
     when 'svgc'
-      to_image(front, back).save_svg_compressed("#{filename}.svg", back.first(3).reverse!)
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg_compressed("#{filename}.svg", r2, g2, b2)
     else raise "Unknown extension #{ext}"
     end
   end
