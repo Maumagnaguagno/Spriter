@@ -33,17 +33,11 @@ require './ImageX'
 
 class Spriter
 
-  AROUND = [
-    [-1,-1],[0,-1],[1,-1],
-    [-1, 0],       [1, 0],
-    [-1, 1],[0, 1],[1, 1]]
-
   #-----------------------------------------------
   # Initialize
   #-----------------------------------------------
 
   def initialize(width, height)
-    # Image proportion
     @width = width
     @height = height
     @grid = Array.new(width * height, 0)
@@ -88,7 +82,7 @@ class Spriter
   # Generate
   #-----------------------------------------------
 
-  def generate(mx = 0, my = 0, falloff = :cosine, probmin = 10, probmax = 75, modifier = :remove, clean = 88, modify = 90)
+  def generate(mx = 0, my = 0, falloff = :cosine, probmin = 10, probmax = 75, clean = 88, modify = 90, remove = true)
     probmax -= probmin
     mirror_x = rand(101) <= mx
     mirror_y = rand(101) <= my
@@ -105,26 +99,37 @@ class Spriter
       index_y += @width
     }
     # Clean
-    if clean or modify
+    if clean and modify
       index_y = 0
+      j = -@width
       limit_y.times {|y|
         limit_x.times {|x|
           count = 0
-          AROUND.each {|i,j| count += 1 if @grid[x + i + (y + j) * @width] == 1}
+          i = x + j
+          count += 1 if @grid[i.pred] == 1
+          count += 1 if @grid[i] == 1
+          count += 1 if @grid[i.succ] == 1
+          i += @width
+          count += 1 if @grid[i.succ] == 1
+          count += 1 if @grid[i.pred] == 1
+          i += @width
+          count += 1 if @grid[i.pred] == 1
+          count += 1 if @grid[i] == 1
+          count += 1 if @grid[i.succ] == 1
           case count
           when 1
             @grid[x + index_y] = 0 if rand(101) <= clean
           when 0
             if rand(101) <= modify
-              case modifier
-              when :remove
+              if remove
                 @grid[x + index_y] = 0
-              when :extend
+              else
                 @grid[x + rand(3).pred + (y + rand(3).pred) * @width] = 1
               end
             end
           end
         }
+        j += @width
         index_y += @width
       }
     end
@@ -166,12 +171,9 @@ class Spriter
   #-----------------------------------------------
 
   def to_s
-    str = ''
+    str = @grid.pack("C#{@width}x" * @height)
     index = -1
-    @height.times {
-      @width.times {str << @grid[index += 1]}
-      str << "\n"
-    }
+    @height.times {str[index += @width.succ] = "\n"}
     str
   end
 
