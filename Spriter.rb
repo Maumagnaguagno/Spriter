@@ -196,13 +196,13 @@ class Spriter
   def save(filename, ext = 'bmp', r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
     case ext
     when 'bmp'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_bmp("#{filename}.bmp")
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_bmp(filename << '.bmp')
     when 'png'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_png("#{filename}.png", Image::RGB)
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_png(filename << '.png', Image::RGB)
     when 'svg'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg("#{filename}.svg")
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg(filename << '.svg')
     when 'svgc'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg_compressed("#{filename}.svg", r2, g2, b2)
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg_compressed(filename << '.svg', r2, g2, b2)
     else raise "Unknown extension #{ext}"
     end
   end
