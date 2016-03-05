@@ -152,36 +152,15 @@ class Image
   # Save SVG
   #-----------------------------------------------
 
-  def save_svg(filename)
+  def save_svg(filename, r = nil, g = nil, b = nil)
     size = width * height << 2
     data = ' ' * size
     read(0, 0, data, size)
-    data = data.unpack('C*')
+    data = data.reverse!.unpack('C*')
     open(filename,'w') {|file|
-      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n"
-      index = -4
-      height.times {|y|
-        width.times {|x|
-          file << "<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(#{data[index += 4,3].reverse!.join(',')})\"/>\n"
-        }
-      }
-      file << '</svg>'
-    }
-  end
-
-  #-----------------------------------------------
-  # Save SVG compressed
-  #-----------------------------------------------
-
-  def save_svg_compressed(filename, r, g, b)
-    size = width * height << 2
-    data = ' ' * size
-    read(0, 0, data, size)
-    data = data.unpack('C*')
-    open(filename,'w') {|file|
-      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"#{width}\" height=\"#{height}\">\n" <<
-              "<rect x=\"0\" y=\"0\" width=\"#{width}\" height=\"#{height}\" fill=\"rgb(#{r},#{g},#{b})\"/>\n"
-      index = 0
+      file << "<svg xmlns=\"http://www.w3.org/2000/svg\"width=\"#{width}\"height=\"#{height}\">"
+      file.printf('<rect x="0"y="0"width="%d"height="%d"fill="#%02x%02x%02x"/>', width, height, r, g, b) if r and g and b
+      index = data.size - 3
       background = [r, g, b]
       height.times {|y|
         w = 0
@@ -190,13 +169,13 @@ class Image
           if color == data[index, 3]
             w += 1
           else
-            file << "<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color.reverse!.join(',')})\"/>\n" if color != background
+            file.printf('<rect x="%d"y="%d"width="%d"height="1"fill="#%02x%02x%02x"/>', x - w, y, w, *color) if color != background
             w = 1
             color = data[index, 3]
           end
-          index += 4
+          index -= 4
         }
-        file << "<rect x=\"#{width - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(#{color.reverse!.join(',')})\"/>\n" if color != background
+        file.printf('<rect x="%d\"y="%d"width="%d"height="1"fill="#%02x%02x%02x"/>', width - w, y, w, *color) if color != background
       }
       file << '</svg>'
     }
