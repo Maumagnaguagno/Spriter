@@ -37,24 +37,24 @@ class Puma < Test::Unit::TestCase
 \0\0\0\0\0\0\0\0\0\0\0\0\1\0\0\0\0\0\0\1\0\0\0\0\0\0\0\0\0\0\0\0
 "
 
-  def generate_puma(filename_ext = nil, ext = nil)
+  def generate_puma(filename = nil)
     srand(65)
     spt = Spriter.new(32, 32)
     spt.generate(87, 13)
-    if filename_ext
-      File.delete(filename_ext) if File.exist?(filename_ext)
-      assert_nothing_raised {spt.save('test', ext)}
-      assert_equal(true, File.exist?(filename_ext))
+    if filename
+      File.delete(filename) if File.exist?(filename)
+      assert_nothing_raised {spt.save(filename)}
+      assert_equal(true, File.exist?(filename))
     end
     spt
   end
 
   def save_load_compare_puma(ext)
-    filename_ext = "test.#{ext}"
-    spt = generate_puma(filename_ext, ext)
+    filename = "test.#{ext}"
+    spt = generate_puma(filename)
     # Compare both images
     img1 = spt.to_image
-    img2 = ext == 'bmp' ? Image.load_bmp(filename_ext) : Image.load_png(filename_ext)
+    img2 = ext == 'bmp' ? Image.load_bmp2(filename) : Image.load_png(filename)
     assert_equal(32, img1.width)
     assert_equal(32, img1.height)
     assert_equal(32, img2.width)
@@ -71,7 +71,7 @@ class Puma < Test::Unit::TestCase
     PUMA.each_byte {|b| puma_data << (b.zero? ? back : front) if b != 10}
     assert_equal(data1, puma_data)
   ensure
-    File.delete(filename_ext)
+    File.delete(filename)
   end
 
   def test_to_s
@@ -87,30 +87,10 @@ class Puma < Test::Unit::TestCase
   end
 
   def test_svg
-    filename_ext = 'test.svg'
-    spt = generate_puma(filename_ext, 'svg')
+    filename = 'test.svg'
+    spt = generate_puma(filename)
     # Compare both images
-    data = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32">'
-    x = y = 0
-    PUMA.each_byte {|b|
-      if b != 10
-        data << "\n<rect x=\"#{x}\" y=\"#{y}\" width=\"1\" height=\"1\" fill=\"rgb(0,#{b.zero? ? 0 : 255},0)\"/>"
-        x += 1
-      else
-        x = 0
-        y += 1
-      end
-    }
-    assert_equal(data << "\n</svg>", IO.read(filename_ext))
-  ensure
-    File.delete(filename_ext)
-  end
-
-  def test_svg_compressed
-    filename_ext = 'test.svg'
-    spt = generate_puma(filename_ext, 'svgc')
-    # Compare both images
-    data = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"32\" height=\"32\">\n<rect x=\"0\" y=\"0\" width=\"32\" height=\"32\" fill=\"rgb(0,0,0)\"/>"
+    data = '<svg xmlns="http://www.w3.org/2000/svg"width="32"height="32"><rect x="0"y="0"width="32"height="32"fill="#000000"/>'
     x = y = w = 0
     color = nil
     PUMA.each_byte {|b|
@@ -119,20 +99,20 @@ class Puma < Test::Unit::TestCase
         if color == b
           w += 1
         else
-          data << "\n<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(0,255,0)\"/>" unless color.zero?
+          data << "<rect x=\"#{x - w}\"y=\"#{y}\"width=\"#{w}\"height=\"1\"fill=\"#00ff00\"/>" unless color.zero?
           w = 1
           color = b
         end
         x += 1
       else
-        data << "\n<rect x=\"#{32 - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"rgb(0,255,0)\"/>" unless color.zero?
+        data << "<rect x=\"#{32 - w}\"y=\"#{y}\"width=\"#{w}\"height=\"1\"fill=\"#00ff00\"/>" unless color.zero?
         x = w = 0
         y += 1
         color = nil
       end
     }
-    assert_equal(data << "\n</svg>", IO.read(filename_ext))
+    assert_equal(data << '</svg>', IO.read(filename))
   ensure
-    File.delete(filename_ext)
+    File.delete(filename)
   end
 end
