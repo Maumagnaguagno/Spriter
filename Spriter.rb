@@ -193,17 +193,15 @@ class Spriter
   # Save
   #-----------------------------------------------
 
-  def save(filename, ext = 'bmp', r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
-    case ext
-    when 'bmp'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_bmp(filename << '.bmp')
-    when 'png'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_png(filename << '.png', Image::RGB)
-    when 'svg'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg(filename << '.svg')
-    when 'svgc'
-      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg_compressed(filename << '.svg', r2, g2, b2)
-    else raise "Unknown extension #{ext}"
+  def save(filename, r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
+    case File.extname(filename)
+    when '.bmp'
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_bmp(filename)
+    when '.png'
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_png(filename)
+    when '.svg'
+      to_image(r1, g1, b1, a1, r2, g2, b2, a2).save_svg(filename, r2, g2, b2)
+    else raise "Unknown extension #{File.extname(filename)}"
     end
   end
 end
@@ -225,7 +223,7 @@ if $0 == __FILE__
       spt = Spriter.new(32, 32)
       spt.generate(87, 13)
       #puts spt.to_s, div
-      spt.save("sprites/#{ext}/sprite_#{seed}", ext)
+      spt.save("sprites/#{ext}/sprite_#{seed}.#{ext}")
     }
     p Time.now.to_f - t
   rescue Interrupt
