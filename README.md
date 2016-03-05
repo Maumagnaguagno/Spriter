@@ -37,13 +37,14 @@ width = height = 32
 data = [0, 0, 255, 255].pack('C4') * (width * height)
 img = Image.new(width, height)
 img.write(0, 0, data, data.size) # Fill image with red BGRA32
-img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05KB)
-img.save_png('red.png') # PNGs are compressed, eat CPU (100 Bytes)
-img.save_svg('red.svg') # SVGs are vector, eat both HD and CPU (63.4 KB)
-img.save_svg_compressed('red2.svg', 255, 0, 0) # SVGs compressed (149 bytes)
+img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05 KB)
+img.save_png('red.png') # PNGs are compressed, eat CPU (100 bytes)
+# SVGs are vector based, CPU and HD usage varies
+img.save_svg('red1.svg') # Without background (1.71 KB)
+img.save_svg('red2.svg', 255, 0, 0) # With red background (120 bytes)
 ```
 
-You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib doing the decompression under Ruby 1.8.7.
+You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib deflating under Ruby 1.8.7.
 I need more tests to see if this behavior maintains.
 You should note that I only support one type of BMP file with 24 bits per pixel, therefore palette based ones are up to you to implement.
 I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
@@ -53,10 +54,9 @@ I just optimized further for my specific need/love of BMPs with 24 bits.
 Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Fixnums.
 
 SVGs are very recent to me, never explored them earlier.
-The default method to save SVGs is extremely simple and creates a big file, while the compressed method creates a single rect for the background and cluster remaining equal pixels in lines.
-This line compression may help to decrease the final size, but makes more tests during the transformation.
-This is not a sign that all images will be compressed, images with several colors will not take advantage of this, only taking longer to be saved.
-The positive side is to exchange CPU time with HD space/time, as a smaller file will take less HD and less cycles to be written now, and read out in the future.
+The old method to save SVGs was very simple and created big files, while the new method creates a single rect for the background and cluster consecutive equal pixels.
+Such optimization may help to decrease the file size while saving time, writing to disk a big file is much slower.
+Note that few images can take advantage of such optimization, as real pictures with several colors.
 
 ## How Spriter works
 Ok, so now we can play with images.
@@ -101,3 +101,4 @@ require './Spriter'
 - API documentation
 - More tests (Spriter, BMP and PNG with different image proportions)
 - Optional color based on neighbor count (may take a lot of CPU)
+- Maybe support svgz: gzipped compressed svg
