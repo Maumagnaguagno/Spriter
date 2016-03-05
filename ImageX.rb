@@ -158,8 +158,8 @@ class Image
     read(0, 0, data, size)
     data = data.reverse!.unpack('C*')
     open(filename,'w') {|file|
-      file << "<svg xmlns=\"http://www.w3.org/2000/svg\"width=\"#{width}\"height=\"#{height}\">"
-      file.printf('<rect x="0"y="0"width="%d"height="%d"fill="#%02x%02x%02x"/>', width, height, r, g, b) if r and g and b
+      file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"#{width}\" height=\"#{height}\">"
+      file.printf('<rect x="0" y="0" width="%d" height="%d" fill="#%02x%02x%02x"/>', width, height, r, g, b) if r and g and b
       index = data.size - 3
       background = [r, g, b]
       height.times {|y|
@@ -169,13 +169,13 @@ class Image
           if color == data[index, 3]
             w += 1
           else
-            file.printf('<rect x="%d"y="%d"width="%d"height="1"fill="#%02x%02x%02x"/>', x - w, y, w, *color) if color != background
+            file.printf('<rect x="%d" y="%d" width="%d" height="1" fill="#%02x%02x%02x"/>', x - w, y, w, *color) if color != background
             w = 1
             color = data[index, 3]
           end
           index -= 4
         }
-        file.printf('<rect x="%d\"y="%d"width="%d"height="1"fill="#%02x%02x%02x"/>', width - w, y, w, *color) if color != background
+        file.printf('<rect x="%d\" y="%d" width="%d" height="1" fill="#%02x%02x%02x"/>', width - w, y, w, *color) if color != background
       }
       file << '</svg>'
     }
