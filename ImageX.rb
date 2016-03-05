@@ -45,9 +45,7 @@ class Image
 
   def save_bmp(filename)
     open(filename,'wb') {|file|
-      # Header
       file << Image.header_bmp(width, height)
-      # Data
       size = width * height << 2
       data = ' ' * size
       read(0, 0, data, size)
@@ -82,19 +80,18 @@ class Image
           width, height, color_type = data.unpack('N2xC')
           image = new(width, height)
         when 'IDAT'
-          data = Zlib::Inflate.inflate(data)
+          data = Zlib::Inflate.inflate(data).reverse!
           index_image = -4
+          index = data.size
           if color_type == RGB
-            index = -2
             height.times {
-              width.times {image.write(index_image += 4, 0, data[index += 3,3].reverse! << 255, 4)}
-              index += 1
+              index -= 1
+              width.times {image.write(index_image += 4, 0, data[index -= 3, 3] << 255, 4)}
             }
           else
-            index = -3
             height.times {
-              width.times {image.write(index_image += 4, 0, data[index += 4,3].reverse! << data[index+3], 4)}
-              index += 1
+              index -= 1
+              width.times {image.write(index_image += 4, 0, data[index -= 3, 3] << data[index -= 1], 4)}
             }
           end
         when 'IEND'
@@ -109,21 +106,22 @@ class Image
   # Save PNG
   #-----------------------------------------------
 
-  def save_png(filename, color_type = RGBA)
+  def save_png(filename, color_type = RGB)
     size = width * height << 2
     data = ' ' * size
     read(0, 0, data, size)
+    data.reverse!
     img_data = ''
-    index = -4
-    if color_type == RGBA
+    index = size.succ
+    if color_type == RGB
       height.times {
         img_data << 0
-        width.times {img_data << data[index += 4, 3].reverse! << data[index.pred]}
+        width.times {img_data << data[index -= 4, 3]}
       }
     else
       height.times {
         img_data << 0
-        width.times {img_data << data[index += 4, 3].reverse!}
+        width.times {img_data << data[index -= 4, 3] << data[index.pred]}
       }
     end
     Image.save_png_data(filename, img_data, width, height, color_type)
