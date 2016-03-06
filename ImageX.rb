@@ -23,13 +23,12 @@ class Image
   def self.load_bmp(filename)
     image = nil
     open(filename,'rb') {|file|
-      width, height = file.read(54).unpack('x18l2')
+      width, height, data = file.read.unpack('x18l2x28a*')
       image = new(width, height)
       padding = width & 3
       w3 = width << 3
       index = -3
       index_image = (width * height.pred).pred << 2
-      data = file.read
       height.times {
         width.times {image.write(index_image += 4, 0, data[index += 3,3] << 255, 4)}
         index_image -= w3
@@ -54,8 +53,8 @@ class Image
       w = width << 3
       height.times {
         width.times {file << data[index += 4, 3]}
-        index -= w
         file << padding
+        index -= w
       }
     }
   end
