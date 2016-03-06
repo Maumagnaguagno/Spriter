@@ -1,10 +1,10 @@
 # Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgc/sprite_65.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgc/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
 </a>
 
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgc/sprite_64.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svgc/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
+<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" target="_blank">
+<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
 </a>
 
 Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)
