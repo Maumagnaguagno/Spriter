@@ -158,7 +158,7 @@ class Image
     data = data.reverse!.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"#{width}\" height=\"#{height}\">"
-      file.printf('<rect x="0" y="0" width="%d" height="%d" fill="#%02x%02x%02x"/>', width, height, r, g, b) if r and g and b
+      file.printf('<rect width="%d" height="%d" fill="#%02x%02x%02x"/>', width, height, r, g, b) if r and g and b
       index = data.size - 3
       background = [r, g, b]
       height.times {|y|
