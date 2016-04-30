@@ -1,3 +1,4 @@
+#encoding: ascii-8bit
 require 'zlib'
 
 class Image
