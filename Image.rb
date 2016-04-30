@@ -21,15 +21,6 @@ class Image
   end
 
   #-----------------------------------------------
-  # Set pixel
-  #-----------------------------------------------
-
-  def set_pixel(x, y, r, g, b, a)
-    @pixels[x + y * @width << 2, 4] = [b,g,r,a].pack('C4')
-    self
-  end
-
-  #-----------------------------------------------
   # Get pixel
   #-----------------------------------------------
 
@@ -39,6 +30,24 @@ class Image
     pixel[0] = pixel[2]
     pixel[2] = b
     pixel
+  end
+
+  #-----------------------------------------------
+  # Set pixel
+  #-----------------------------------------------
+
+  def set_pixel(x, y, r, g, b, a)
+    @pixels[x + y * @width << 2, 4] = [b,g,r,a].pack('C4')
+    self
+  end
+
+  #-----------------------------------------------
+  # Match pixel
+  #-----------------------------------------------
+
+  def match_pixel?(x, y, r, g, b, a)
+    index = x + y * @width << 2
+    @pixels.getbyte(index) == b and @pixels.getbyte(index + 1) == g and @pixels.getbyte(index + 2) == r and @pixels.getbyte(index + 3) == a
   end
 
   #-----------------------------------------------
