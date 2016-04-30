@@ -21,19 +21,16 @@ class Image
   #-----------------------------------------------
 
   def self.load_bmp(filename)
-    image = nil
-    open(filename,'rb') {|file|
-      width, height, data = file.read.unpack('x18l2x28a*')
-      image = new(width, height)
-      padding = width & 3
-      w3 = width << 3
-      index = -3
-      index_image = (width * height.pred).pred << 2
-      height.times {
-        width.times {image.write(index_image += 4, 0, data[index += 3,3] << 255, 4)}
-        index_image -= w3
-        index += padding
-      }
+    width, height, data = IO.binread(filename).unpack('x18l2x28a*')
+    image = new(width, height)
+    padding = width & 3
+    w3 = width << 3
+    index = -3
+    index_image = (width * height.pred).pred << 2
+    height.times {
+      width.times {image.write(index_image += 4, 0, data[index += 3,3] << 255, 4)}
+      index_image -= w3
+      index += padding
     }
     image
   end
@@ -131,12 +128,10 @@ class Image
   #-----------------------------------------------
 
   def self.save_png_data(filename, data, width, height, color_type)
-    open(filename,'wb') {|file|
-      file << "\x89PNG\r\n\x1a\n" <<
-              chunk('IHDR', [width, height, 8, color_type].pack('N2C2x3')) <<
-              chunk('IDAT', Zlib::Deflate.deflate(data, 9)) <<
-              "\0\0\0\0IEND\xAEB`\x82"
-    }
+    IO.binwrite(filename, "\x89PNG\r\n\x1a\n" <<
+      chunk('IHDR', [width, height, 8, color_type].pack('N2C2x3')) <<
+      chunk('IDAT', Zlib::Deflate.deflate(data, 9)) <<
+      "\0\0\0\0IEND\xAEB`\x82")
   end
 
   #-----------------------------------------------
