@@ -71,7 +71,7 @@ class Puma < Test::Unit::TestCase
     PUMA.each_byte {|b| puma_data << (b.zero? ? back : front) if b != 10}
     assert_equal(data1, puma_data)
   ensure
-    File.delete(filename)
+    File.delete(filename) if File.exist?(filename)
   end
 
   def test_to_s
@@ -113,6 +113,6 @@ class Puma < Test::Unit::TestCase
     }
     assert_equal(data << '</svg>', IO.read(filename))
   ensure
-    File.delete(filename)
+    File.delete(filename) if File.exist?(filename)
   end
 end
