@@ -25,11 +25,8 @@ class Image
   #-----------------------------------------------
 
   def get_pixel(x, y)
-    pixel = @pixels[x + y * @width << 2, 4].unpack('C4')
-    b = pixel[0]
-    pixel[0] = pixel[2]
-    pixel[2] = b
-    pixel
+    index = x + y * @width << 2
+    [@pixels.getbyte(index + 2), @pixels.getbyte(index + 1), @pixels.getbyte(index), @pixels.getbyte(index + 3)]
   end
 
   #-----------------------------------------------
@@ -37,7 +34,11 @@ class Image
   #-----------------------------------------------
 
   def set_pixel(x, y, r, g, b, a)
-    @pixels[x + y * @width << 2, 4] = [b,g,r,a].pack('C4')
+    index = x + y * @width << 2
+    @pixels.setbyte(index, b)
+    @pixels.setbyte(index + 1, g)
+    @pixels.setbyte(index + 2, r)
+    @pixels.setbyte(index + 3, a)
     self
   end
 
