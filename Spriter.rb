@@ -230,6 +230,5 @@ if $0 == __FILE__
     puts 'Interrupted'
   rescue
     puts $!, $@
-    STDIN.gets
   end
 end
