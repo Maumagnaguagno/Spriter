@@ -16,18 +16,18 @@ Inspecting the element I found the source with the [WTFPL](http://www.wtfpl.net/
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 Then the integer probability and seed control made easier to handle the beast.
 Some time after that I moved most of the Image class to C to achieve enough speed for in-game effects and let the old pure Ruby class waiting.
-Therefore the project contains an Image class split in two files, ```Image.rb``` with the pixel information visible and ```ImageX.rb``` extending the Image class with complex instructions.
-A Spriter class in ```Spriter.rb``` make use of the Image class.
+Therefore the project contains an Image class split in two files, ``Image.rb`` with the pixel information visible and ``ImageX.rb`` extending the Image class with complex methods.
+A Spriter class in ``Spriter.rb`` make use of the Image class.
 
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to save and load files.
 It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
 
 ## How Image works
-Before you have sprites, you need images. 
-And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ```BGRABGRABGRA```.
+Before you have sprites, you need images.
+And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ``BGRABGRABGRA``.
 Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
 Alpha is used for transparency effects, usually used in PNGs.
-We can easily pack an Array ```color = [B,G,R,A]``` to a BGRA32 String using ```color.pack('C4')```, where B, G, R and A are Fixnums between 0 and 255.
+We can easily pack an Array ``color = [B,G,R,A]`` to a BGRA32 String using ``color.pack('C4')``, where B, G, R and A are Fixnums between 0 and 255.
 
 ```Ruby
 require './Image'
