@@ -9,7 +9,7 @@ rvm:
   # JRuby
   - jruby-9000
   # Rubinius
-  - rbx
+  - rubinius
 script:
   - ruby tests/pixels.rb
   - ruby tests/puma.rb
