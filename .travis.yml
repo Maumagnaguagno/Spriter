@@ -8,8 +8,6 @@ rvm:
   - 2.3.0
   # JRuby
   - jruby-9000
-  # Rubinius
-  - rubinius
 script:
   - ruby tests/pixels.rb
   - ruby tests/puma.rb
