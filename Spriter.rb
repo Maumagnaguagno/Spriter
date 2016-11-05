@@ -212,7 +212,7 @@ end
 if $0 == __FILE__
   begin
     t = Time.now.to_f
-    div = '-' * 32
+    div = '--------------------------------'
     ext = ARGV.first || 'bmp'
     unless File.directory?("sprites/#{ext}")
       Dir.mkdir('sprites') unless File.directory?('sprites')
