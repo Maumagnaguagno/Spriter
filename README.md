@@ -44,10 +44,8 @@ img.save_svg('red1.svg') # Without background (1.87 KB)
 img.save_svg('red2.svg', 255, 0, 0) # With red background (114 bytes)
 ```
 
-You can also load BMPs and PNGs, but PNGs already exploded for me with ZLib deflating under Ruby 1.8.7.
-I need more tests to see if this behavior maintains.
-You should note that I only support one type of BMP file with 24 bits per pixel, therefore palette based ones are up to you to implement.
-I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
+You can also load BMPs and PNGs, note that only BMPs with 24 bits per pixel (8 bits per channel) are supported, therefore palette based ones are up to you to implement.
+It supports two modes for PNG: RGB and RGBA.
 
 If any part of my implementation is not understandable at first sight you should read this [guide to the binary format of BMPs](http://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need/love of BMPs with 24 bits.
@@ -55,7 +53,7 @@ Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/
 
 SVGs are very recent to me, never explored them earlier.
 The old method to save SVGs was very simple and created big files, while the new method creates a single rect for the background and cluster consecutive equal pixels.
-Such optimization may help to decrease the file size while saving time, writing to disk a big file is much slower.
+Such optimization may help decrease the file size while saving time, writing to disk a big file is much slower.
 Note that few images can take advantage of such optimization, as real pictures have several colors.
 
 ## How Spriter works
