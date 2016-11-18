@@ -49,7 +49,7 @@ I need more tests to see if this behavior maintains.
 You should note that I only support one type of BMP file with 24 bits per pixel, therefore palette based ones are up to you to implement.
 I tried to support two modes for PNGs: RGB and RGBA, but no reason to enter in details before I actually test this.
 
-If you do not understand at first sight part of my implementation you should read this [guide to the binary format of BMPs](https://practicingruby.com/articles/binary-file-formats).
+If any part of my implementation is not understandable at first sight you should read this [guide to the binary format of BMPs](http://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need/love of BMPs with 24 bits.
 Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Fixnums.
 
