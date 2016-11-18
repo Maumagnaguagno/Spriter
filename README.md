@@ -56,7 +56,7 @@ Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/
 SVGs are very recent to me, never explored them earlier.
 The old method to save SVGs was very simple and created big files, while the new method creates a single rect for the background and cluster consecutive equal pixels.
 Such optimization may help to decrease the file size while saving time, writing to disk a big file is much slower.
-Note that few images can take advantage of such optimization, as real pictures with several colors.
+Note that few images can take advantage of such optimization, as real pictures have several colors.
 
 ## How Spriter works
 Ok, so now we can play with images.
@@ -74,7 +74,7 @@ We can look at the generated images and complete the missing pixels.
 
 It is important to note that you can reproduce your results giving the same ~~seed~~ inspiration to the computer.
 The Image class is only used to save and load files, no need to require it otherwise.
-Spriter is grid-based (zeroes and ones) and can print without problems to the terminal.
+Spriter is works on a binary grid and can print without problems to the terminal.
 
 ```Ruby
 require './Spriter'
