@@ -54,7 +54,7 @@ class Puma < Test::Unit::TestCase
     spt = generate_puma(filename)
     # Compare both images
     img1 = spt.to_image
-    img2 = ext == 'bmp' ? Image.load_bmp(filename) : Image.load_png(filename)
+    img2 = ext == 'bmp' ? Image.load_bmp2(filename) : Image.load_png(filename)
     assert_equal(32, img1.width)
     assert_equal(32, img1.height)
     assert_equal(32, img2.width)
