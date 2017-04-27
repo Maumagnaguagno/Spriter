@@ -1,10 +1,8 @@
 # Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
 **Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)**
-
 <a href="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" target="_blank">
 <img src="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
 </a>
-
 <a href="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" target="_blank">
 <img src="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
 </a>
