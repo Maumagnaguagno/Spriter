@@ -1,13 +1,13 @@
 # Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
+**Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)**
+
+<a href="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" target="_blank">
+<img src="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
 </a>
 
-<a href="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" target="_blank">
-<img src="https://rawgithub.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
+<a href="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" target="_blank">
+<img src="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_64.svg" align="right" width="96px" title="Old man" border="0"/>
 </a>
-
-Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)
 
 I wanted cool sprites, but creative blocks are always haunting me...
 Soon I found the site of putpixel generating several small sprites and thought: **Cool, but it is not Ruby...** :broken_heart:  
