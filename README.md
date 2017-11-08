@@ -25,7 +25,7 @@ Before you have sprites, you need images.
 And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ``BGRABGRABGRA``.
 Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
 Alpha is used for transparency effects, usually used in PNGs.
-We can easily pack an Array ``color = [B,G,R,A]`` to a BGRA32 String using ``color.pack('C4')``, where B, G, R and A are Fixnums between 0 and 255.
+We can easily pack an Array ``color = [B,G,R,A]`` to a BGRA32 String using ``color.pack('C4')``, where B, G, R and A are Integers between 0 and 255.
 
 ```Ruby
 require './Image'
@@ -47,7 +47,7 @@ It supports two modes for PNG: RGB and RGBA.
 
 If any part of my implementation is not understandable at first sight you should read this [guide to the binary format of BMPs](http://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need/love of BMPs with 24 bits.
-Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Fixnums.
+Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
 
 SVGs are very recent to me, never explored them earlier.
 The old method to save SVGs was very simple and created big files, while the new method creates a single rect for the background and cluster consecutive equal pixels.
