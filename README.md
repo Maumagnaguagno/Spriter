@@ -15,8 +15,8 @@ A [new colored version of Spritgen is available here](http://img.uninhabitant.co
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 With integer probability and seed control it was easy to handle the beast.
 Some time after that I moved most of the Image class to C to achieve enough speed for in-game effects and left the old pure Ruby class waiting.
-Therefore the project contains an Image class split in two files, ``Image.rb`` with the pixel information visible and ``ImageX.rb`` extending the Image class with complex methods.
-A Spriter class in ``Spriter.rb`` make use of the Image class.
+Therefore the project contains an Image class split in two files, [Image.rb](Image.rb) with the pixel information visible and [ImageX.rb](ImageX.rb) extending the Image class with complex methods.
+The Spriter class defined in [Spriter.rb](Spriter.rb) make use of the Image class.
 
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to save and load files.
 It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
