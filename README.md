@@ -1,5 +1,5 @@
 # Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
-**Sprite generator based on [Spritegen](http://tools.putpixel.com/spritegen.html)**
+**Sprite generator based on [Spritegen](https://web.archive.org/web/20160305123432/http://tools.putpixel.com/spritegen.html)**
 <a href="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" target="_blank">
 <img src="https://rawgit.com/Maumagnaguagno/Spriter/master/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma" border="0"/>
 </a>
