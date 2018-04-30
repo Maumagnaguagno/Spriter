@@ -66,7 +66,7 @@ class Image
     width = height = color_type = 0
     open(filename,'rb') {|file|
       # Signature
-      file.pos += 8
+      file.pos = 8
       loop {
         size, type = file.read(8).unpack('NA4')
         data = file.read(size)
