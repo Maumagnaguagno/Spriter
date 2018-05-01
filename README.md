@@ -23,8 +23,8 @@ It is a shame that image and sound are not first class citizens of modern langua
 
 ## How Image works
 Before you have sprites, you need images.
-And since BMP files are my favorite image format (much simpler), the images use BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ``BGRABGRABGRA``.
-Each 8 bits channel holds a color: Red, Green, Blue and Alpha.
+And since BMP is my favorite image format (much simpler), pixels are stored as BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ``BGRABGRABGRA``.
+Each 8 bit channel holds a color: Red, Green, Blue and Alpha.
 Alpha is used for transparency effects, usually used in PNGs.
 We can easily pack an Array ``color = [B,G,R,A]`` to a BGRA32 String using ``color.pack('C4')``, where B, G, R and A are Integers between 0 and 255.
 
@@ -47,21 +47,20 @@ You can also load BMPs and PNGs, note that only BMPs with 24 bits per pixel (8 b
 It supports two modes for PNG: RGB and RGBA.
 
 If any part of my implementation is not understandable at first sight you should read this [guide to the binary format of BMPs](http://practicingruby.com/articles/binary-file-formats).
-I just optimized further for my specific need/love of BMPs with 24 bits.
+I just optimized further for my specific need of BMPs.
 Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
 
-SVGs are very recent to me, never explored them earlier.
-The old method to save SVGs was very simple and created big files, while the new method creates a single rect for the background and cluster consecutive equal pixels.
-Such optimization may help decrease the file size while saving time, writing to disk a big file is much slower.
-Note that few images can take advantage of such optimization, as real pictures have several colors.
+The naive conversion to SVG resulted in big files describing each pixel as a rectangle.
+The new method creates a single rect for the background and cluster consecutive equal pixels.
+Such optimization may help decrease the file size while saving time, as writing a big file to disk is much slower.
+Note that few images can take advantage of such optimization, as photographs have several colors.
 
 ## How Spriter works
 Ok, so now we can play with images.
-Yeah!
-But none of us know how to draw, even less without interface.
+But none of us know how to draw, even less without an interface.
 We are not alone, the computer also does not know.
 Now the three of us make the non-artist club.
-We know that sometimes we draw OK, but it is one in ten and take a long time.
+We know that sometimes we draw OK, but it is one in ten and it takes a long time to draw.
 The computer can draw much faster those ten times.
 Humm...
 What if we asked the computer for a lot of images with different random seeds and pixel distribution probabilities.
@@ -69,9 +68,9 @@ It works, the computer drew something that resembles a Puma!
 Creativity is just brute-force with insight now!
 We can look at the generated images and complete the missing pixels.
 
-It is important to note that you can reproduce your results giving the same ~~seed~~ inspiration to the computer.
+It is important to note that you can reproduce your results by giving the same ~~seed~~ inspiration to the computer.
 The Image class is only used to save and load files, no need to require it otherwise.
-Spriter is works on a binary grid and can print without problems to the terminal.
+Spriter works on a binary grid, which can be printed to a terminal.
 
 ```Ruby
 require './Spriter'
