@@ -21,7 +21,7 @@ The Spriter class defined in [Spriter.rb](Spriter.rb) make use of the Image clas
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to save and load files.
 It is a shame that image and sound are not first class citizens of modern languages, requiring a lot of work to build a library or to understand one to reach this level of fun.
 
-## How Image works
+## Image class
 Before you have sprites, you need images.
 And since BMP is my favorite image format (much simpler), pixels are stored as BGRA32 internally to hold the channels in a packed String, e.g. an image with 3 pixels is stored as ``BGRABGRABGRA``.
 Each 8 bit channel holds a color: Red, Green, Blue and Alpha.
@@ -55,7 +55,7 @@ The new method creates a single rect for the background and cluster consecutive 
 Such optimization may help decrease the file size while saving time, as writing a big file to disk is much slower.
 Note that few images can take advantage of such optimization, as photographs have several colors.
 
-## How Spriter works
+## Spriter class
 Ok, so now we can play with images.
 But none of us know how to draw, even less without an interface.
 We are not alone, the computer also does not know.
