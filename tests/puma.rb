@@ -111,7 +111,7 @@ class Puma < Test::Unit::TestCase
         color = nil
       end
     }
-    assert_equal(data << '</svg>', IO.read(filename))
+    assert_equal(data << '</svg>', IO.binread(filename))
   ensure
     File.delete(filename) if File.exist?(filename)
   end
