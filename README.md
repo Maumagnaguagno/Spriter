@@ -1,10 +1,10 @@
 # Spriter [![Build Status](https://travis-ci.org/Maumagnaguagno/Spriter.svg)](https://travis-ci.org/Maumagnaguagno/Spriter)
 **Sprite generator based on monochrome [Spritegen](https://web.archive.org/web/20160305123432/http://tools.putpixel.com/spritegen.html)**
 <a href="/sprites/svg/sprite_65.svg" target="_blank">
-<img src="/sprites/svg/sprite_65.svg" align="right" width="96px" title="Puma"/>
+<img src="/sprites/svg/sprite_65.svg" align="right" width="96" title="Puma"/>
 </a>
 <a href="/sprites/svg/sprite_64.svg" target="_blank">
-<img src="/sprites/svg/sprite_64.svg" align="right" width="96px" title="Old man"/>
+<img src="/sprites/svg/sprite_64.svg" align="right" width="96" title="Old man"/>
 </a>
 
 I wanted cool sprites, but creative blocks are always haunting me...
