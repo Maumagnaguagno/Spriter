@@ -69,15 +69,12 @@ class Image
       file.pos = 8
       loop {
         size, type = file.read(8).unpack('NA4')
-        data = file.read(size)
-        # CRC
-        file.pos += 4
         case type
         when 'IHDR'
-          width, height, color_type = data.unpack('N2xC')
+          width, height, color_type = file.read(size).unpack('N2xC')
           image = new(width, height)
         when 'IDAT'
-          data = Zlib::Inflate.inflate(data).reverse!
+          data = Zlib::Inflate.inflate(file.read(size)).reverse!
           index_image = -4
           index = data.size
           if color_type == RGB
@@ -93,7 +90,10 @@ class Image
           end
         when 'IEND'
           break
+        else file.pos += size
         end
+        # CRC
+        file.pos += 4
       }
     }
     image
