@@ -10,12 +10,12 @@
 I wanted cool sprites, but creative blocks are always haunting me...
 Soon I found an online tool generating several small sprites and thought: **Cool, but it is not Ruby...** :broken_heart:  
 Inspecting the element I found the source with the [WTFPL](http://www.wtfpl.net/), and got started.  
-A [new colored version of Spritgen is available here](http://img.uninhabitant.com/spritegen.html?controls=true&autorandomize=false&pal=arne&colours=2&bg=0&size=12&spacing=8&tiles=16&zoom=1&scaler0=eagle2x&scaler1=none&advanced=false&advanced=true&seed=1363177051286&autoreseed=false&autoreseed=true&falloff=linear&probmin=0.1&probmax=0.9&bias=0.8&gain=0.8&mirrorh=0.9&mirrorv=0.1&despeckle=1&despur=1).
+A [new colored version of Spritegen is available here](http://img.uninhabitant.com/spritegen.html?controls=true&autorandomize=false&pal=arne&colours=2&bg=0&size=12&spacing=8&tiles=16&zoom=1&scaler0=eagle2x&scaler1=none&advanced=false&advanced=true&seed=1363177051286&autoreseed=false&autoreseed=true&falloff=linear&probmin=0.1&probmax=0.9&bias=0.8&gain=0.8&mirrorh=0.9&mirrorv=0.1&despeckle=1&despur=1).
 
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 With integer probability and seed control it was easy to handle the beast.
 Some time after that I moved most of the Image class to C to achieve enough speed for in-game effects and left the old pure Ruby class waiting.
-Therefore the project contains an Image class split in two files, [Image.rb](Image.rb) with basic methods and [ImageX.rb](ImageX.rb) extending the Image class with complex methods.
+Therefore, the project contains an Image class split in two files, [Image.rb](Image.rb) with basic methods and [ImageX.rb](ImageX.rb) extending the Image class with complex methods.
 The Spriter class defined in [Spriter.rb](Spriter.rb) make use of the Image class.
 
 The goal is not to have a Sprite generator alone, but a consistent example of an Image class being used to save and load files.
