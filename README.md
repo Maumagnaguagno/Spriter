@@ -37,10 +37,10 @@ data = [0, 0, 255, 255].pack('C4') * (width * height)
 img = Image.new(width, height)
 img.write(0, 0, data, data.size) # Fill image with red BGRA32
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05 KB)
-img.save_png('red.png') # PNGs are compressed, eat CPU (100 bytes)
+img.save_png('red.png') # PNGs are compressed, eat CPU (96 bytes)
 # SVGs are vector based, CPU and HD usage varies
 img.save_svg('red1.svg') # Without background (1.87 KB)
-img.save_svg('red2.svg', 255, 0, 0) # With red background (114 bytes)
+img.save_svg('red2.svg', 255, 0, 0) # With red background (96 bytes)
 ```
 
 You can also load BMPs and PNGs, note that only BMPs with 24 bits per pixel (8 bits per channel) are supported, therefore palette based ones are up to you to implement.
@@ -51,9 +51,9 @@ I just optimized further for my specific need of BMPs.
 Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
 
 The naive conversion to SVG resulted in big files describing each pixel as a rectangle.
-The new method creates a single rect for the background and cluster consecutive equal pixels.
+The new method sets a background color and cluster consecutive equal pixels.
 Such optimization may help decrease the file size while saving time, as writing a big file to disk is much slower.
-Note that few images can take advantage of such optimization, as photographs have several colors.
+Note that only images with limited palette can exploit such optimization.
 
 ## Spriter class
 Ok, so now we can play with images.

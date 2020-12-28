@@ -90,7 +90,7 @@ class Puma < Test::Unit::TestCase
     filename = 'test.svg'
     spt = generate_puma(filename)
     # Compare both images
-    data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="#000000"/>'
+    data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="background:#000000">'
     x = y = w = 0
     color = nil
     PUMA.each_byte {|b|
