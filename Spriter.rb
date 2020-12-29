@@ -14,8 +14,8 @@
 # Feb 2015
 # - Optimized
 # Mar 2015
-# - Fall off x outside inner loop
-# - Correct xy mirroring
+# - Fall off X outside inner loop
+# - Correct XY mirroring
 # Jan 2016
 # - Optional clean step
 # Mar 2016

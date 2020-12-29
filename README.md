@@ -80,8 +80,8 @@ require './Spriter'
   # 32x32 is my style, bigger images are harder to generate cool effects
   spt = Spriter.new(32, 32)
   # Generate a sprite with:
-  # 87% of replicating the left on the right
-  # 13% of replicating the top on the bottom
+  # 87% chance of replicating the left on the right
+  # 13% chance of replicating the top on the bottom
   # You can also control the distribution function, probabilities and cleaning/adding loose pixels
   spt.generate(87, 13)
   # If you want to see it in the Terminal, print it
@@ -97,4 +97,3 @@ require './Spriter'
 - API documentation
 - More tests (Spriter, BMP and PNG with different image proportions)
 - Optional color based on neighbor count (may take a lot of CPU)
-- Maybe support svgz: gzipped compressed svg
