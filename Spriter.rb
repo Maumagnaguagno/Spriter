@@ -136,30 +136,28 @@ class Spriter
     # Mirror
     if mirror_y
       index_y = 0
+      mirror_y = @width * @height.pred
       if mirror_x
-        mirror_xy = (@width * @height).pred
-        mirror_x = @width.pred
-        mirror_y = mirror_xy - mirror_x
+        mirror_x = limit_x
         limit_y.times {
-          limit_x.times {|x| @grid[mirror_x - x] = @grid[mirror_y + x] = @grid[mirror_xy - x] = @grid[x + index_y]}
-          index_y += @width
+          @grid[mirror_x, limit_x] = @grid[index_y, limit_x].reverse!
+          @grid[mirror_y, @width] = @grid[index_y, @width]
           mirror_x += @width
           mirror_y -= @width
-          mirror_xy -= @width
+          index_y += @width
         }
       else
-        mirror_y = @height.pred * @width
         limit_y.times {
-          limit_x.times {|x| @grid[mirror_y + x] = @grid[x + index_y]}
+          @grid[mirror_y, limit_x] = @grid[index_y, limit_x]
           mirror_y -= @width
           index_y += @width
         }
       end
     elsif mirror_x
       index_y = 0
-      mirror_x = @width.pred
+      mirror_x = limit_x
       limit_y.times {
-        limit_x.times {|x| @grid[mirror_x - x] = @grid[x + index_y]}
+        @grid[mirror_x, limit_x] = @grid[index_y, limit_x].reverse!
         mirror_x += @width
         index_y += @width
       }
