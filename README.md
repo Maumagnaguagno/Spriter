@@ -10,7 +10,7 @@
 I wanted cool sprites, but creative blocks are always haunting me...
 Soon I found an online tool generating several small sprites and thought: **Cool, but it is not Ruby...** :broken_heart:  
 Inspecting the element I found the source with the [WTFPL](http://www.wtfpl.net/), and got started.  
-A [new colored version of Spritegen is available here](http://img.uninhabitant.com/spritegen.html?controls=true&autorandomize=false&pal=arne&colours=2&bg=0&size=12&spacing=8&tiles=16&zoom=1&scaler0=eagle2x&scaler1=none&advanced=false&advanced=true&seed=1363177051286&autoreseed=false&autoreseed=true&falloff=linear&probmin=0.1&probmax=0.9&bias=0.8&gain=0.8&mirrorh=0.9&mirrorv=0.1&despeckle=1&despur=1).
+A [new colored version of Spritegen is available here](https://img.uninhabitant.com/spritegen.html).
 
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 With integer probability and seed control it was easy to handle the beast.
@@ -46,9 +46,9 @@ img.save_svg('red2.svg', 255, 0, 0) # With red background (96 bytes)
 You can also load BMPs and PNGs, note that only BMPs with 24 bits per pixel (8 bits per channel) are supported, therefore palette based ones are up to you to implement.
 It supports two modes for PNG: RGB and RGBA.
 
-If any part of my implementation is not understandable at first sight you should read this [guide to the binary format of BMPs](http://practicingruby.com/articles/binary-file-formats).
+If any part of my implementation is not understandable at first sight, you should read this [guide to the binary format of BMPs](https://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need of BMPs.
-Another interesting post is [ChunkyPNG pack/unpack tricks](http://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
+Another interesting post is [ChunkyPNG pack/unpack tricks](https://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
 
 The naive conversion to SVG resulted in big files describing each pixel as a rectangle.
 The new method sets a background color and cluster consecutive equal pixels.
@@ -88,7 +88,7 @@ require './Spriter'
   # just make sure the character "\0" is invisible and "\1" is visible
   puts spt.to_s, '-' * 32
   # Save it to a file, destination folder sprites/bmp/ must already exist
-  # You can also give foreground and background colors default is green on black
+  # You can also give foreground and background colors, default is green on black
   spt.save("sprites/bmp/sprite_#{inspiration}.bmp", 0,255,0,255, 0,0,0,255)
 }
 ```
