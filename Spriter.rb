@@ -182,9 +182,10 @@ class Spriter
   def to_image(r1 = 0, g1 = 255, b1 = 0, a1 = 255, r2 = 0, g2 = 0, b2 = 0, a2 = 255)
     front = [b1, g1, r1, a1].pack('C4')
     back = [b2, g2, r2, a2].pack('C4')
-    pixels = ''
-    @grid.each {|i| pixels << (i.zero? ? back : front)}
-    Image.new(@width, @height).write(0, 0, pixels, pixels.size)
+    i = 0
+    pixels = back * (@width * @height)
+    @grid.each {|p| pixels[i,4] = front if p != 0; i += 4}
+    Image.new(@width, @height).write(0, 0, pixels, i)
   end
 
   #-----------------------------------------------
