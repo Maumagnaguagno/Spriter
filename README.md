@@ -39,7 +39,7 @@ img.write(0, 0, data, data.size) # Fill image with red BGRA32
 img.save_bmp('red.bmp') # BMPs are uncompressed, eat HD (3.05 KB)
 img.save_png('red.png') # PNGs are compressed, eat CPU (96 bytes)
 # SVGs are vector based, CPU and HD usage varies
-img.save_svg('red1.svg') # Without background (1.87 KB)
+img.save_svg('red1.svg') # Without background (1.30 KB)
 img.save_svg('red2.svg', 255, 0, 0) # With red background (96 bytes)
 ```
 

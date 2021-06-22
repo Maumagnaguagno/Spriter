@@ -99,13 +99,13 @@ class Puma < Test::Unit::TestCase
         if color == b
           w += 1
         else
-          data << "<rect x=\"#{x - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"#00ff00\"/>" unless color.zero?
+          data << "<path d=\"M#{x - w} #{y}h#{w}v1H#{x - w}z\" fill=\"#00ff00\"/>" unless color.zero?
           w = 1
           color = b
         end
         x += 1
       else
-        data << "<rect x=\"#{32 - w}\" y=\"#{y}\" width=\"#{w}\" height=\"1\" fill=\"#00ff00\"/>" unless color.zero?
+        data << "<path d=\"M#{32 - w} #{y}h#{w}v1H#{32 - w}z\" fill=\"#00ff00\"/>" unless color.zero?
         x = w = 0
         y += 1
         color = nil

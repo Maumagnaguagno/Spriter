@@ -165,13 +165,13 @@ class Image
           if color == data[index, 3]
             w += 1
           else
-            file.printf('<rect x="%d" y="%d" width="%d" height="1" fill="#%02x%02x%02x"/>', x - w, y, w, *color) if color != background
+            file.printf('<path d="M%d %dh%dv1H%dz" fill="#%02x%02x%02x"/>', x - w, y, w, x - w, *color) if color != background
             w = 1
             color = data[index, 3]
           end
           index -= 4
         }
-        file.printf('<rect x="%d\" y="%d" width="%d" height="1" fill="#%02x%02x%02x"/>', width - w, y, w, *color) if color != background
+        file.printf('<path d="M%d %dh%dv1H%dz" fill="#%02x%02x%02x"/>', width - w, y, w, width - w, *color) if color != background
       }
       file << '</svg>'
     }
