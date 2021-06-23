@@ -28,8 +28,8 @@
 # - Color based on neighbor count
 #-----------------------------------------------
 
-require './Image'
-require './ImageX'
+require_relative 'Image'
+require_relative 'ImageX'
 
 class Spriter
 
