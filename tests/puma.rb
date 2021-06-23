@@ -90,7 +90,7 @@ class Puma < Test::Unit::TestCase
     filename = 'test.svg'
     spt = generate_puma(filename)
     # Compare both images
-    data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="background:#000000">'
+    data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="background:#000000"><path d="'
     x = y = w = 0
     color = nil
     PUMA.each_byte {|b|
@@ -99,19 +99,18 @@ class Puma < Test::Unit::TestCase
         if color == b
           w += 1
         else
-          data << "<path d=\"M#{x - w} #{y}h#{w}v1H#{x - w}z\" fill=\"#00ff00\"/>" unless color.zero?
+          data << "M#{x - w} #{y}h#{w}v1H#{x - w}z" unless color.zero?
           w = 1
           color = b
         end
         x += 1
       else
-        data << "<path d=\"M#{32 - w} #{y}h#{w}v1H#{32 - w}z\" fill=\"#00ff00\"/>" unless color.zero?
         x = w = 0
         y += 1
         color = nil
       end
     }
-    assert_equal(data << '</svg>', IO.binread(filename))
+    assert_equal(data << '" fill="#00ff00"/></svg>', IO.binread(filename))
   ensure
     File.delete(filename) if File.exist?(filename)
   end
