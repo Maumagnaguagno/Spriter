@@ -158,11 +158,11 @@ class Image
         background = [b, g, r].pack('C3')
       end
       file << '>'
-      index = 0
       paths = Hash.new {|h,k| h[k] = ''}
+      c = data[index = 0, 3]
       height.times {|y|
         w = 0
-        c = color = data[index, 3]
+        color = c
         width.times {|x|
           if color == c
             w += 1
