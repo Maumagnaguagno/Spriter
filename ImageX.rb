@@ -151,13 +151,14 @@ class Image
     size = width * height << 2
     data = ' ' * size
     read(0, 0, data, size)
-    data.reverse!
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"#{width}\" height=\"#{height}\""
-      file.printf(' style="background:#%02x%02x%02x"', r, g, b) if r and g and b
+      if r and g and b
+        file.printf(' style="background:#%02x%02x%02x"', r, g, b)
+        background = [b, g, r].pack('C3')
+      end
       file << '>'
-      index = size - 3
-      background = [r, g, b].pack('C3')
+      index = 0
       paths = Hash.new {|h,k| h[k] = ''}
       height.times {|y|
         w = 0
@@ -170,11 +171,11 @@ class Image
             w = 1
             color = c
           end
-          c = data[index -= 4, 3]
+          c = data[index += 4, 3]
         }
         paths[color] << sprintf('M%d %dh%dv1H%dz', width - w, y, w, width - w) if color != background
       }
-      paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.unpack('C3'))}
+      paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.unpack('C3').reverse!)}
       file << '</svg>'
     }
   end
