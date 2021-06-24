@@ -154,23 +154,23 @@ class Image
     data = data.reverse!.unpack('C*')
     open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"#{width}\" height=\"#{height}\""
-      file.printf(" style=\"background:#%02x%02x%02x\"", r, g, b) if r and g and b
+      file.printf(' style="background:#%02x%02x%02x"', r, g, b) if r and g and b
       file << '>'
       index = size - 3
       background = [r, g, b]
       paths = Hash.new {|h,k| h[k] = ''}
       height.times {|y|
         w = 0
-        color = data[index, 3]
+        c = color = data[index, 3]
         width.times {|x|
-          if color == data[index, 3]
+          if color == c
             w += 1
           else
             paths[color] << sprintf('M%d %dh%dv1H%dz', x - w, y, w, x - w) if color != background
             w = 1
-            color = data[index, 3]
+            color = c
           end
-          index -= 4
+          c = data[index -= 4, 3]
         }
         paths[color] << sprintf('M%d %dh%dv1H%dz', width - w, y, w, width - w) if color != background
       }
