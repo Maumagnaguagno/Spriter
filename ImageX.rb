@@ -63,8 +63,8 @@ class Image
 
   def self.load_png(filename)
     image = nil
-    width = height = color_type = 0
     open(filename,'rb') {|file|
+      width = height = color_type = 0
       # Signature
       file.pos = 8
       loop {
