@@ -129,7 +129,7 @@ class Spriter
             end
           end
         }
-        j += @width
+        j = index_y
         index_y += @width
       }
     end
@@ -138,28 +138,21 @@ class Spriter
       index_y = 0
       mirror_y = @width * @height.pred
       if mirror_x
-        mirror_x = limit_x
         limit_y.times {
-          @grid[mirror_x, limit_x] = @grid[index_y, limit_x].reverse!
-          @grid[mirror_y, @width] = @grid[index_y, @width]
-          mirror_x += @width
-          mirror_y -= @width
+          @grid[index_y + range_x, range_x] = @grid[index_y, range_x].reverse!
+          @grid[mirror_y - index_y, @width] = @grid[index_y, @width]
           index_y += @width
         }
       else
         limit_y.times {
-          @grid[mirror_y, limit_x] = @grid[index_y, limit_x]
-          mirror_y -= @width
+          @grid[mirror_y - index_y, @width] = @grid[index_y, @width]
           index_y += @width
         }
       end
     elsif mirror_x
-      index_y = 0
-      mirror_x = limit_x
       limit_y.times {
-        @grid[mirror_x, limit_x] = @grid[index_y, limit_x].reverse!
-        mirror_x += @width
-        index_y += @width
+        @grid[limit_x, range_x] = @grid[limit_x - range_x, range_x].reverse!
+        limit_x += @width
       }
     end
   end
