@@ -71,7 +71,7 @@ class Image
         size, type = file.read(8).unpack('NA4')
         case type
         when 'IHDR'
-          width, height, color_type = file.read(size).unpack('N2xC')
+          width, height, color_type = file.read(13).unpack('N2xC')
         when 'IDAT' # Support only single IDAT chunk
           image = new(width, height)
           data = Zlib::Inflate.inflate(file.read(size)).reverse!
