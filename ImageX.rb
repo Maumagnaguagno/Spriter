@@ -140,7 +140,7 @@ class Image
   #-----------------------------------------------
 
   def self.chunk(type, data)
-    [data.size, type, data, Zlib.crc32(type << data)].pack('NA4A*N')
+    [data.size, type << data, Zlib.crc32(type)].pack('NA*N')
   end
 
   #-----------------------------------------------
