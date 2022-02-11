@@ -13,11 +13,12 @@ class Image
   end
 
   #-----------------------------------------------
-  # Dup
+  # Initialize copy
   #-----------------------------------------------
 
-  def dup
-    self.class.new(@width, @height).write(0, 0, @pixels, @pixels.size)
+  def initialize_copy(other)
+    super
+    @pixels = @pixels.dup
   end
 
   #-----------------------------------------------

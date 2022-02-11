@@ -9,7 +9,7 @@ class Pixels < Test::Unit::TestCase
     assert_equal(3, img.height)
   end
 
-  def test_dup
+  def test_copy
     img = Image.new(1,1)
     dup = img.set_pixel(0,0, 100,150,200,255).dup
     assert_equal([100,150,200,255], img.get_pixel(0,0))
