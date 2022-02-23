@@ -175,7 +175,7 @@ class Image
         }
         paths[color] << sprintf('M%d %dh%dv1H%dz', width - w, y, w, width - w) if color != background
       }
-      paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.unpack('C3').reverse!)}
+      paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.bytes.reverse!)}
       file << '</svg>'
     }
   end
