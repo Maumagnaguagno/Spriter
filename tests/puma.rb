@@ -44,7 +44,7 @@ class Puma < Test::Unit::TestCase
     if filename
       File.delete(filename) if File.exist?(filename)
       assert_nothing_raised {spt.save(filename)}
-      assert_equal(true, File.exist?(filename))
+      assert_true(File.exist?(filename))
     end
     spt
   end
