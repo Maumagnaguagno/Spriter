@@ -91,11 +91,9 @@ class Puma < Test::Unit::TestCase
     spt = generate_puma(filename)
     # Compare both images
     data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="background:#000000"><path d="'
-    x = y = w = 0
-    color = nil
+    x = y = w = color = 0
     PUMA.each_byte {|b|
       if b != 10
-        color = b unless color
         if color == b
           w += 1
         else
@@ -105,9 +103,8 @@ class Puma < Test::Unit::TestCase
         end
         x += 1
       else
-        x = w = 0
+        x = w = color = 0
         y += 1
-        color = nil
       end
     }
     assert_equal(data << '" fill="#00ff00"/></svg>', IO.binread(filename))
