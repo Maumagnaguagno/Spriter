@@ -41,7 +41,7 @@ class Image
   #-----------------------------------------------
 
   def save_bmp(filename)
-    open(filename,'wb') {|file|
+    File.open(filename,'wb') {|file|
       file << Image.header_bmp(width, height)
       size = width * height << 2
       data = ' ' * size
@@ -63,7 +63,7 @@ class Image
 
   def self.load_png(filename)
     image = nil
-    open(filename,'rb') {|file|
+    File.open(filename,'rb') {|file|
       width = height = color_type = 0
       # Signature
       file.pos = 8
@@ -151,7 +151,7 @@ class Image
     size = width * height << 2
     data = ' ' * size
     read(0, 0, data, size)
-    open(filename,'w') {|file|
+    File.open(filename,'w') {|file|
       file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"#{width}\" height=\"#{height}\""
       if r and g and b
         file.printf(' style="background:#%02x%02x%02x"', r, g, b)
