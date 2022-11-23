@@ -161,19 +161,17 @@ class Image
       paths = Hash.new {|h,k| h[k] = ''}
       c = data[index = 0, 3]
       height.times {|y|
-        w = 0
+        i = 0
         color = c
         width.times {|x|
-          if color == c
-            w += 1
-          else
-            paths[color] << sprintf('M%d %dh%dv1H%dz', x - w, y, w, x - w) if color != background
-            w = 1
+          if color != c
+            paths[color] << sprintf('M%d %dh%dv1H%dz', i, y, x - i, i) if color != background
+            i = x
             color = c
           end
           c = data[index += 4, 3]
         }
-        paths[color] << sprintf('M%d %dh%dv1H%dz', width - w, y, w, width - w) if color != background
+        paths[color] << sprintf('M%d %dh%dv1H%dz', i, y, width - i, i) if color != background
       }
       paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.bytes.reverse!)}
       file << '</svg>'
