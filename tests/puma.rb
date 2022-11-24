@@ -91,18 +91,15 @@ class Puma < Test::Unit::TestCase
     spt = generate_puma(filename)
     # Compare both images
     data = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="background:#000000"><path d="'
-    x = y = w = 0
+    x = y = i = 0
     PUMA.each_byte {|b|
       if b == 10
-        x = 0
+        x = i = 0
         y += 1
       else
         if b == 0
-          if w != 0
-            data << "M#{x - w} #{y}h#{w}v1H#{x - w}z"
-            w = 0
-          end
-        else w += 1
+          data << "M#{i} #{y}h#{x - i}v1H#{i}z" if x > i
+          i = x + 1
         end
         x += 1
       end
