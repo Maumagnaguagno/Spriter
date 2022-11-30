@@ -165,13 +165,13 @@ class Image
         color = c
         width.times {|x|
           if color != c
-            paths[color] << sprintf('M%d %dh%dv1H%dz', i, y, x - i, i) if color != background
+            paths[color] << sprintf('M%d %dh%dv1H%d', i, y, x - i, i) if color != background
             i = x
             color = c
           end
           c = data[index += 4, 3]
         }
-        paths[color] << sprintf('M%d %dh%dv1H%dz', i, y, width - i, i) if color != background
+        paths[color] << sprintf('M%d %dh%dv1H%d', i, y, width - i, i) if color != background
       }
       paths.each {|color,path| file.printf('<path d="%s" fill="#%02x%02x%02x"/>', path, *color.bytes.reverse!)}
       file << '</svg>'

@@ -98,7 +98,7 @@ class Puma < Test::Unit::TestCase
         y += 1
       else
         if b == 0
-          data << "M#{i} #{y}h#{x - i}v1H#{i}z" if x > i
+          data << "M#{i} #{y}h#{x - i}v1H#{i}" if x > i
           i = x + 1
         end
         x += 1
