@@ -22,7 +22,7 @@ class Image
   #-----------------------------------------------
 
   def self.load_bmp(filename)
-    width, height, data = IO.binread(filename).unpack('x18l2x28a*')
+    width, height, data = File.binread(filename).unpack('x18l2x28a*')
     image = new(width, height)
     padding = width & 3
     w3 = width << 3
@@ -129,7 +129,7 @@ class Image
   #-----------------------------------------------
 
   def self.save_png_data(filename, data, width, height, color_type)
-    IO.binwrite(filename, "\x89PNG\r\n\x1a\n" <<
+    File.binwrite(filename, "\x89PNG\r\n\x1a\n" <<
       chunk('IHDR', [width, height, 8, color_type].pack('N2C2x3')) <<
       chunk('IDAT', Zlib::Deflate.deflate(data, 9)) <<
       "\0\0\0\0IEND\xAEB`\x82")
