@@ -10,7 +10,7 @@
 I wanted cool sprites, but creative blocks are always haunting me...
 Soon I found an online tool generating several small sprites and thought: **Cool, but it is not Ruby...** :broken_heart:  
 Inspecting the element I found the source with the [WTFPL](http://www.wtfpl.net/), and got started.  
-A [new colored version of Spritegen is available here](https://img.uninhabitant.com/spritegen.html).
+A [new colored version of Spritegen is available here](https://web.archive.org/web/20221016034741/https://img.uninhabitant.com/spritegen.html).
 
 It was December 2013, created my own version with most of the algorithm intact to test my Image class.
 With integer probability and seed control it was easy to handle the beast.
