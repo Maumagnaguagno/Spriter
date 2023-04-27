@@ -48,7 +48,7 @@ It supports two modes for PNG: RGB and RGBA.
 
 If any part of my implementation is not understandable at first sight, you should read this [guide to the binary format of BMPs](https://practicingruby.com/articles/binary-file-formats).
 I just optimized further for my specific need of BMPs.
-Another interesting post is [ChunkyPNG pack/unpack tricks](https://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
+Another interesting post is [ChunkyPNG pack/unpack tricks](https://web.archive.org/web/20200202031423/https://chunkypng.com/2010/01/17/ode-to-array-pack-and-string-unpack.html) related to images stored as an Array of Integers.
 
 The naive conversion to SVG resulted in big files describing each pixel as a rectangle.
 The new method sets a background color and cluster consecutive equal pixels.
