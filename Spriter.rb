@@ -164,7 +164,7 @@ class Spriter
   def to_s
     str = @grid.pack("C#{@width}x" * @height)
     index = -1
-    @height.times {str[index += @width.succ] = "\n"}
+    @height.times {str.setbyte(index += @width.succ, 10)}
     str
   end
 
