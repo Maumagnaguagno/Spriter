@@ -1,3 +1,4 @@
+# encoding: ascii-8bit
 class Image
 
   attr_reader :width, :height
