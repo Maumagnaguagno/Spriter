@@ -58,7 +58,7 @@ class Image
   #-----------------------------------------------
 
   def read(pixel_index, data_index, data, n_elem)
-    data[data_index, n_elem] = @pixels[pixel_index, n_elem]
+    data[data_index, n_elem] = @pixels.byteslice(pixel_index, n_elem)
     self
   end
 
@@ -67,7 +67,7 @@ class Image
   #-----------------------------------------------
 
   def write(pixel_index, data_index, data, n_elem)
-    @pixels[pixel_index, n_elem] = data[data_index, n_elem]
+    @pixels[pixel_index, n_elem] = data.byteslice(data_index, n_elem)
     self
   end
 end

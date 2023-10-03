@@ -29,7 +29,7 @@ class Image
     index = -3
     index_image = (width * height.pred).pred << 2
     height.times {
-      width.times {image.write(index_image += 4, 0, data[index += 3,3] << 255, 4)}
+      width.times {image.write(index_image += 4, 0, data.byteslice(index += 3, 3) << 255, 4)}
       index_image -= w3
       index += padding
     }
@@ -50,7 +50,7 @@ class Image
       index = size - (width.succ << 2)
       w = width << 3
       height.times {
-        width.times {file << data[index += 4, 3]}
+        width.times {file << data.byteslice(index += 4, 3)}
         file << padding
         index -= w
       }
@@ -80,12 +80,12 @@ class Image
           if color_type == RGB
             height.times {
               index -= 1
-              width.times {image.write(index_image += 4, 0, data[index -= 3, 3] << 255, 4)}
+              width.times {image.write(index_image += 4, 0, data.byteslice(index -= 3, 3) << 255, 4)}
             }
           else
             height.times {
               index -= 1
-              width.times {image.write(index_image += 4, 0, data[index -= 3, 3] << data[index -= 1], 4)}
+              width.times {image.write(index_image += 4, 0, data.byteslice(index -= 3, 3) << data.getbyte(index -= 1), 4)}
             }
           end
         when 'IEND'
@@ -113,12 +113,12 @@ class Image
     if color_type == RGB
       height.times {
         img_data << 0
-        width.times {img_data << data[index -= 4, 3]}
+        width.times {img_data << data.byteslice(index -= 4, 3)}
       }
     else
       height.times {
         img_data << 0
-        width.times {img_data << data[index -= 4, 3] << data[index.pred]}
+        width.times {img_data << data.byteslice(index -= 4, 3) << data.getbyte(index.pred)}
       }
     end
     Image.save_png_data(filename, img_data, width, height, color_type)
@@ -159,7 +159,7 @@ class Image
       end
       file << '>'
       paths = Hash.new {|h,k| h[k] = ''}
-      c = data[index = 0, 3]
+      c = data.byteslice(index = 0, 3)
       height.times {|y|
         i = 0
         color = c
@@ -169,7 +169,7 @@ class Image
             i = x
             color = c
           end
-          c = data[index += 4, 3]
+          c = data.byteslice(index += 4, 3)
         }
         paths[color] << sprintf('M%d %dh%dv1H%d', i, y, width - i, i) if color != background
       }
