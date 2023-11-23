@@ -202,7 +202,7 @@ if $0 == __FILE__
   begin
     t = Time.now.to_f
     div = '--------------------------------'
-    ext = ARGV.first || 'bmp'
+    ext = ARGV[0] || 'bmp'
     unless File.directory?("sprites/#{ext}")
       Dir.mkdir('sprites') unless File.directory?('sprites')
       Dir.mkdir("sprites/#{ext}")
