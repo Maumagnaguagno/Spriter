@@ -88,8 +88,8 @@ class Spriter
     mirror_y = rand(101) <= my
     range_x = @width >> 1
     range_y = @height >> 1
-    limit_x = mirror_x ? range_x : @width
-    limit_y = mirror_y ? range_y : @height
+    limit_x = mirror_x ? @width - range_x : @width
+    limit_y = mirror_y ? @height - range_y : @height
     # Draw
     index_y = 0
     falloff_x = Array.new(limit_x) {|x| send(falloff, range_x, x)}
@@ -136,22 +136,23 @@ class Spriter
     # Mirror
     if mirror_y
       index_y = 0
-      mirror_y = @width * @height.pred
+      mirror_y = -@width
       if mirror_x
         limit_y.times {
-          @grid[index_y + range_x, range_x] = @grid[index_y, range_x].reverse!
+          @grid[index_y + limit_x, range_x] = @grid[index_y, range_x].reverse!
           @grid[mirror_y - index_y, @width] = @grid[index_y, @width]
           index_y += @width
         }
       else
-        limit_y.times {
+        range_y.times {
           @grid[mirror_y - index_y, @width] = @grid[index_y, @width]
           index_y += @width
         }
       end
     elsif mirror_x
+      mirror_x = limit_x
       limit_y.times {
-        @grid[limit_x, range_x] = @grid[limit_x - range_x, range_x].reverse!
+        @grid[limit_x, range_x] = @grid[limit_x - mirror_x, range_x].reverse!
         limit_x += @width
       }
     end
