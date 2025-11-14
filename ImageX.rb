@@ -76,7 +76,7 @@ class Image
           image = new(width, height)
           data = Zlib::Inflate.inflate(file.read(size)).reverse!
           index_image = -4
-          index = data.size
+          index = data.bytesize
           if color_type == RGB
             height.times {
               index -= 1
@@ -140,7 +140,7 @@ class Image
   #-----------------------------------------------
 
   def self.chunk(type, data)
-    [data.size, type << data, Zlib.crc32(type)].pack('NA*N')
+    [data.bytesize, type << data, Zlib.crc32(type)].pack('NA*N')
   end
 
   #-----------------------------------------------
