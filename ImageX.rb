@@ -77,16 +77,18 @@ class Image
           data = Zlib::Inflate.inflate(file.read(size)).reverse!
           index_image = -4
           index = data.bytesize
-          if color_type == RGB
+          case color_type
+          when RGB
             height.times {
               index -= 1
               width.times {image.write(index_image += 4, 0, data.byteslice(index -= 3, 3) << 255, 4)}
             }
-          else
+          when RGBA
             height.times {
               index -= 1
               width.times {image.write(index_image += 4, 0, data.byteslice(index -= 3, 3) << data.getbyte(index -= 1), 4)}
             }
+          else raise 'Unsupported color type'
           end
         when 'IEND'
           break
@@ -110,16 +112,18 @@ class Image
     data.reverse!
     img_data = ''
     index = size.succ
-    if color_type == RGB
+    case color_type
+    when RGB
       height.times {
         img_data << 0
         width.times {img_data << data.byteslice(index -= 4, 3)}
       }
-    else
+    when RGBA
       height.times {
         img_data << 0
         width.times {img_data << data.byteslice(index -= 4, 3) << data.getbyte(index.pred)}
       }
+    else raise 'Unsupported color type'
     end
     Image.save_png_data(filename, img_data, width, height, color_type)
   end
