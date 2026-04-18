@@ -1,3 +1,4 @@
+# encoding: ascii-8bit
 require 'test/unit'
 require './Image'
 
@@ -57,7 +58,7 @@ class Pixels < Test::Unit::TestCase
     img.read(0,0, data_r, 8)
     assert_equal(8, data_r.size)
     assert_equal(8, data_r.bytesize)
-    data_w = "\xC3\x97\0\0\3\2\1\xFF".b
+    data_w = "\xC3\x97\0\0\3\2\1\xFF"
     data_r2 = "\0\0\0\0\0\0\0\0"
     img.write(0,0, data_w, 8)
     img.read(0,0, data_r2, 8)
