@@ -178,7 +178,7 @@ class Spriter
     back = [b2, g2, r2, a2].pack('C4')
     i = 0
     pixels = back * (@width * @height)
-    @grid.each {|p| pixels[i,4] = front if p != 0; i += 4}
+    @grid.each {|p| pixels.bytesplice(i,4,front) if p != 0; i += 4}
     Image.new(@width, @height).write(0, 0, pixels, i)
   end
 
